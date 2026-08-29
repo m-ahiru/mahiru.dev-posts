@@ -13,7 +13,7 @@ interface Props {
   progress?: boolean;
 }
 
-const { title, description = 'Posts zu Literatur & Philosophie.', active, progress = false } = Astro.props;
+const { title, description = 'Posts', active, progress = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
