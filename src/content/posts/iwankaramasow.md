@@ -1,6 +1,6 @@
 ---
 title: "Iwan Karamasow Analyse"
-date: 2026-08-29
+date: 2026-08-22
 description: "Iwan, der Konflikt, generelle TBK Themes"
 work: "Die Brüder Karamasow"
 author: "Fyodor Dostoevsky"
