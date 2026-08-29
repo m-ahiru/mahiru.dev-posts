@@ -4,7 +4,7 @@ date: 2026-08-29
 description: "Iwan, der Konflikt, generelle TBK Themes"
 work: "Die Brüder Karamasow"
 author: "Fyodor Dostoevsky"
-cover: "/covers/ivan.jpg"
+cover: "/covers/ivan.png"
 coverAlt: "Iwan Karamsow"
 draft: false
 ---
