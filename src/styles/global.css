@@ -24,7 +24,7 @@
      AKZENTFARBE — hier ändern, der Rest (Links, Nav, Partikel,
      Progress-Balken, Marker) zieht automatisch nach.
      ═══════════════════════════════════════════════════════════ */
-  --accent:      #e6b25e;   /* warm amber */
+  --accent:      #993399;   /* warm amber: #e6b25e */
 
   --accent-soft: color-mix(in srgb, var(--accent) 80%, #000 20%);
   --accent-glow: color-mix(in srgb, var(--accent) 16%, transparent);
