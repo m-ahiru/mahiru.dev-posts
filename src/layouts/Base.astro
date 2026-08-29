@@ -8,7 +8,7 @@ interface Props {
   title: string;
   description?: string;
   /** which nav item is active: 'home' | 'posts' */
-  active?: 'home' | 'posts' | undefined;
+  active?: 'home' | 'posts' | 'rankings' | undefined;
   /** show the reading progress bar (post pages) */
   progress?: boolean;
 }
@@ -48,6 +48,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         <nav class="nav" aria-label="Hauptnavigation">
           <a href="/" aria-current={active === 'home' ? 'page' : undefined}>index</a>
           <a href="/posts" aria-current={active === 'posts' ? 'page' : undefined}>posts</a>
+          <a href="/rankings" aria-current={active === 'rankings' ? 'page' : undefined}>rankings</a>
         </nav>
       </div>
     </header>

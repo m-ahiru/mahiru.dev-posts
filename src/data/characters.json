@@ -1,0 +1,12 @@
+[
+  { "name": "Bernardo Soares", "work": "The Book of Disquiet", "author": "Fernando Pessoa", "image": "/rankings/bernardo.png" },
+  { "name": "Fang Yuan", "work": "Reverend Insanity", "author": "Ghu Zhen Ren", "image": "/rankings/fangyuan.jpg" },
+  { "name": "Augusto Pérez", "work": "Niebla/Mist", "author": "Miguel de Unamuno", "image": "/rankings/augusto.jpg" },
+  { "name": "Altazor", "work": "Altazor", "author": "Vicente Huidobro", "image": "/rankings/altazor.png" },
+  { "name": "Harrier du Bois", "work": "Disco Elysium", "author": "ZA/UM", "image": "/rankings/harrier.png" },
+  { "name": "Harry Haller", "work": "Steppenwolf", "author": "Hermann Hesse", "image": "/rankings/haller.png" },
+  { "name": "Charles Eyler", "work": "Hello Charlotte", "author": "etherane", "image": "/rankings/charles.jpg" },
+  { "name": "Emil Sinclair", "work": "Demian", "author": "Hermann Hesse", "image": "/rankings/demian.jpg" },
+  { "name": "Ivan Karamazov", "work": "The Brothers Karamazov", "author": "Fyodor Dostoevsky", "image": "/rankings/ivan.png" },
+  { "name": "Yevgeny Bazarov", "work": "Fathers & Sons", "author": "Ivan Turgenev", "image": "/rankings/bazarov.png" }
+]

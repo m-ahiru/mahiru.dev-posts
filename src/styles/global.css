@@ -24,7 +24,7 @@
      AKZENTFARBE — hier ändern, der Rest (Links, Nav, Partikel,
      Progress-Balken, Marker) zieht automatisch nach.
      ═══════════════════════════════════════════════════════════ */
-  --accent:      #b490fc;   /* warm amber: #e6b25e */
+  --accent:      #b490fc;   /* dein Akzent (Default war amber #e6b25e) */
 
   --accent-soft: color-mix(in srgb, var(--accent) 80%, #000 20%);
   --accent-glow: color-mix(in srgb, var(--accent) 16%, transparent);
@@ -417,4 +417,100 @@ main, .site-header, .site-footer { position: relative; z-index: 1; }
     scroll-behavior: auto !important;
   }
   .hero-name .cursor { opacity: 1; }
+}
+
+/* ============================================================
+   rankings — lookbook (additiv; nutzt nur bestehende Tokens)
+   ============================================================ */
+.rank-head { padding-block: clamp(2.5rem, 8vh, 4.5rem) 0; }
+
+.rank-section { margin-top: clamp(3rem, 10vh, 7rem); }
+.rank-section:first-of-type { margin-top: 2.5rem; }
+.rank-section-title {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(2.2rem, 7vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  text-wrap: balance;
+  margin-bottom: clamp(1.5rem, 5vh, 3rem);
+}
+
+.rank-list { display: flex; flex-direction: column; }
+
+.rank-entry {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.75rem, 6vw, 5rem);
+  padding-block: clamp(4rem, 13vh, 8.5rem);
+  min-height: 60vh;
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 2.4s ease, transform 2.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rank-entry:nth-child(even) { flex-direction: row-reverse; }
+.rank-entry.is-visible { opacity: 1; transform: none; }
+
+.rank-photo {
+  flex: 0 0 auto;
+  width: clamp(200px, 34vw, 400px);
+  background: #ffffff;
+  padding: clamp(10px, 1.2vw, 16px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.rank-photo img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+.rank-entry:hover .rank-photo {
+  transform: translateY(-6px);
+  box-shadow: 0 32px 74px rgba(0, 0, 0, 0.65);
+}
+
+.rank-body { flex: 1 1 0; min-width: 0; }
+.rank-num {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.55;
+  margin-bottom: 0.5rem;
+}
+.rank-name {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 5vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+.rank-meta {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-faint);
+  margin-top: 0.9rem;
+  display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem;
+}
+.rank-meta .dot { color: var(--fg-ghost); }
+
+@media (max-width: 760px) {
+  .rank-entry, .rank-entry:nth-child(even) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .rank-photo { width: min(78vw, 340px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rank-entry { opacity: 1 !important; transform: none !important; transition: none !important; }
 }

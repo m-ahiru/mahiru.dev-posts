@@ -1,0 +1,26 @@
+---
+interface Props {
+  num: number;
+  name: string;
+  author?: string;
+  work?: string;
+  image: string;
+  alt?: string;
+}
+const { num, name, author, work, image, alt } = Astro.props;
+---
+
+<article class="rank-entry">
+  <div class="rank-photo">
+    <img src={image} alt={alt ?? name} loading="lazy" decoding="async" />
+  </div>
+  <div class="rank-body">
+    <div class="rank-num">{num}.</div>
+    <h3 class="rank-name">{name}</h3>
+    <div class="rank-meta">
+      {work && <span>{work}</span>}
+      {work && author && <span class="dot">·</span>}
+      {author && <span>{author}</span>}
+    </div>
+  </div>
+</article>

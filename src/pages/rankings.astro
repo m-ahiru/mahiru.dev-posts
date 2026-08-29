@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import RankingEntry from '../components/RankingEntry.astro';
+import characters from '../data/characters.json';
+import media from '../data/media.json';
+---
+
+<Base title="rankings — mahiru" active="rankings" description="Meine Lieblingscharaktere und -medien." progress>
+  <section class="wrap rank-head">
+    <span class="eyebrow">Rankings</span>
+  </section>
+
+  <section class="wrap">
+    <div class="panel">
+      <h2 class="rank-section-title">My favorite fictional characters.</h2>
+      <div class="rank-list">
+        {characters.map((c, i) => (
+          <RankingEntry num={i + 1} name={c.name} work={c.work} author={c.author} image={c.image} alt={c.alt} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="panel">
+      <h2 class="rank-section-title">My favorite Media.</h2>
+      <div class="rank-list">
+        {media.map((m, i) => (
+          <RankingEntry num={i + 1} name={m.name} author={m.author} image={m.image} alt={m.alt} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <noscript><style>.rank-entry{opacity:1;transform:none;}</style></noscript>
+
+  <script>
+    const els = document.querySelectorAll('.rank-entry');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!('IntersectionObserver' in window) || reduce) {
+      els.forEach((el) => el.classList.add('is-visible'));
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            // beim Reinscrollen einblenden, beim Vorbeiscrollen wieder ausblenden
+            e.target.classList.toggle('is-visible', e.isIntersecting);
+          });
+        },
+        { threshold: 0, rootMargin: '-30% 0px -30% 0px' }
+      );
+      els.forEach((el) => io.observe(el));
+    }
+  </script>
+</Base>
