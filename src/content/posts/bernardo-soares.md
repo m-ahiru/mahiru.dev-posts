@@ -1,5 +1,5 @@
 ---
-title: "Bernardo Soares Analyse"
+title: "Bernardo Soares Analyse (Unfinished)"
 date: 2026-08-29
 description: "Bernardo Soares - der passivste Mann der ununterbrochen handelt."
 work: "The Book of Disquiet"
