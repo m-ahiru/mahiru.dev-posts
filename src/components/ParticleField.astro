@@ -1,0 +1,165 @@
+---
+// Signature: dichtes Netz aus driftenden Text-Fragmenten.
+// Nodes = mehrere Wortfetzen zusammen, verbunden durch feine Linien ("Netz").
+// Geerdet: Fragmente = "Buch der Unruhe", zersplittertes Ich = Heteronyme.
+// Akzentfarbe wird aus der CSS-Variable --accent gelesen -> eine Quelle für alles.
+---
+
+<canvas class="particle-field" aria-hidden="true" data-particle-field></canvas>
+
+<script>
+  // ---- Tuning (hier drehen, wenn dir Dichte/Ruhe nicht passt) ----
+  const DENSITY   = 11000; // kleiner = mehr Partikel
+  const MAX_NODES = 95;    // Deckel
+  const LINK_DIST = 150;   // px: bis hierhin werden Nodes vernetzt
+  const SPEED     = 0.16;  // Driftgeschwindigkeit
+  // ----------------------------------------------------------------
+
+  const canvas = document.querySelector('[data-particle-field]');
+  if (canvas instanceof HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Farbe aus CSS-Variable ziehen (ändert sich mit, wenn du --accent anpasst)
+    function hexToRgb(h) {
+      h = h.trim().replace('#', '');
+      if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+      const n = parseInt(h, 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    }
+    const accentHex = getComputedStyle(document.documentElement)
+      .getPropertyValue('--accent') || '#e6b25e';
+    const [AR, AG, AB] = hexToRgb(accentHex);
+
+    // Wortfetzen + Dev-Glyphen — die zwei Identitäten vereint.
+    const pool = [
+      'desassossego', 'Traum', 'Wille', 'Ich', 'Soares', 'Caeiro', 'Campos',
+      'Reis', 'Bühne', 'Unruhe', 'sonhar', 'heteronym', 'Fragment', 'Sehnsucht',
+      'nada', 'ser', 'não-ser', 'Kalvarienberg', 'wollen', 'reduzieren',
+      '{ }', ';', '//', '<>', '/*', '*/', '[]', '=>', '~/', '§', '¶',
+    ];
+    const seps = ['  ·  ', '   ', '  /  ', '  //  '];
+
+    // Jeder Node = 2–3 Fetzen zusammen
+    function makeText() {
+      const k = 2 + ((Math.random() * 2) | 0);
+      const parts = [];
+      for (let i = 0; i < k; i++) parts.push(pool[(Math.random() * pool.length) | 0]);
+      return parts.join(seps[(Math.random() * seps.length) | 0]);
+    }
+
+    let W = 0, H = 0, dpr = 1;
+    let nodes = [];
+    let raf = 0;
+    const rand = (a, b) => a + Math.random() * (b - a);
+
+    function build() {
+      const count = Math.min(MAX_NODES, Math.floor((W * H) / DENSITY));
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: rand(-SPEED, SPEED),
+        vy: rand(-SPEED, SPEED),
+        t: makeText(),
+        s: rand(10, 15),
+        a: rand(0.12, 0.36),
+        amber: Math.random() < 0.12,
+      }));
+    }
+
+    function resize() {
+      if (!ctx) return;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.clientWidth;
+      H = canvas.clientHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build();
+    }
+
+    function drawLinks() {
+      if (!ctx) return;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < LINK_DIST * LINK_DIST) {
+            const d = Math.sqrt(d2);
+            const t = 1 - d / LINK_DIST;
+            const amber = nodes[i].amber || nodes[j].amber;
+            ctx.strokeStyle = amber
+              ? `rgba(${AR}, ${AG}, ${AB}, ${t * 0.16})`
+              : `rgba(232, 230, 225, ${t * 0.09})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function drawNodes() {
+      if (!ctx) return;
+      for (const p of nodes) {
+        ctx.font = `500 ${p.s}px 'Literata Variable', Georgia, serif`;
+        ctx.fillStyle = p.amber
+          ? `rgba(${AR}, ${AG}, ${AB}, ${p.a + 0.06})`
+          : `rgba(232, 230, 225, ${p.a})`;
+        ctx.fillText(p.t, p.x, p.y);
+      }
+    }
+
+    function step() {
+      for (const p of nodes) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.y < -20) p.y = H + 20;
+        if (p.y > H + 20) p.y = -20;
+        if (p.x < -140) p.x = W + 140;
+        if (p.x > W + 140) p.x = -140;
+      }
+    }
+
+    function frame() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, W, H);
+      step();
+      drawLinks();
+      drawNodes();
+      raf = requestAnimationFrame(frame);
+    }
+
+    function drawStatic() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, W, H);
+      drawLinks();
+      drawNodes();
+    }
+
+    function start() {
+      cancelAnimationFrame(raf);
+      resize();
+      if (reduce.matches) { drawStatic(); return; }
+      raf = requestAnimationFrame(frame);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else if (!reduce.matches) raf = requestAnimationFrame(frame);
+    });
+
+    let rt;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = window.setTimeout(start, 150);
+    });
+    reduce.addEventListener?.('change', start);
+
+    if (document.fonts?.ready) document.fonts.ready.then(start);
+    else start();
+  }
+</script>

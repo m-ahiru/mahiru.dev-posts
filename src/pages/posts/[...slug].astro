@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = (await getCollection('posts')).filter((e) => !e.data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, date, description, work, author, cover, coverAlt } = entry.data;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' });
+---
+
+<Base title={`${title} — mahiru`} description={description ?? `Post: ${title}`} progress>
+  <article class="wrap">
+    <div class="panel article-panel">
+      <header class="article-head">
+        <a href="/posts" class="back-link"><span aria-hidden="true">&larr;</span> posts</a>
+
+        <div class="article-meta">
+          <span>{fmt(date)}</span>
+          {work && (<><span class="dot">·</span><span>{work}</span></>)}
+          {author && (<><span class="dot">·</span><span>{author}</span></>)}
+        </div>
+
+        <h1 class="article-title">{title}</h1>
+        {description && <p class="article-lede">{description}</p>}
+      </header>
+
+      {cover && (
+        <figure class="article-cover">
+          <img src={cover} alt={coverAlt ?? ''} loading="eager" decoding="async" />
+        </figure>
+      )}
+
+      <hr class="rule" />
+
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+import ParticleField from '../components/ParticleField.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** which nav item is active: 'home' | 'posts' */
+  active?: 'home' | 'posts' | undefined;
+  /** show the reading progress bar (post pages) */
+  progress?: boolean;
+}
+
+const { title, description = 'Posts zu Literatur & Philosophie.', active, progress = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    {progress && <ReadingProgress />}
+    <ParticleField />
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label="Startseite">
+          <span class="sigil">~/</span><span>mahiru</span>
+        </a>
+        <nav class="nav" aria-label="Hauptnavigation">
+          <a href="/" aria-current={active === 'home' ? 'page' : undefined}>index</a>
+          <a href="/posts" aria-current={active === 'posts' ? 'page' : undefined}>posts</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

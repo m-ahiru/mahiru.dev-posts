@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'posts'>[];
+  total: number;
+}
+
+const { entries, total } = Astro.props;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' });
+---
+
+<ul class="entry-list">
+  {entries.map((e, i) => (
+    <li class="entry">
+      <a href={`/posts/${e.id}`} class={e.data.cover ? 'has-thumb' : undefined}>
+        <span class="entry-num">{String(total - i).padStart(2, '0')}</span>
+        <span class="entry-body">
+          <span class="entry-title">{e.data.title}</span>
+          {e.data.description && <span class="entry-desc">{e.data.description}</span>}
+          <span class="entry-meta">
+            <span>{fmt(e.data.date)}</span>
+            {e.data.work && (<><span class="dot">·</span><span>{e.data.work}</span></>)}
+            {e.data.author && (<><span class="dot">·</span><span>{e.data.author}</span></>)}
+          </span>
+        </span>
+        {e.data.cover && (
+          <span class="entry-thumb">
+            <img src={e.data.cover} alt={e.data.coverAlt ?? ''} loading="lazy" decoding="async" />
+          </span>
+        )}
+      </a>
+    </li>
+  ))}
+</ul>

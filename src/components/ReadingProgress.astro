@@ -1,0 +1,30 @@
+---
+// Dünner Fortschrittsbalken oben, füllt sich beim Scrollen der Analyse.
+---
+
+<div class="reading-progress" aria-hidden="true"><span data-progress-bar></span></div>
+
+<script>
+  const bar = document.querySelector('[data-progress-bar]');
+  if (bar instanceof HTMLElement) {
+    const doc = document.documentElement;
+    let ticking = false;
+
+    function update() {
+      const max = doc.scrollHeight - doc.clientHeight;
+      const p = max > 0 ? doc.scrollTop / max : 0;
+      bar.style.width = (p * 100).toFixed(2) + '%';
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+</script>

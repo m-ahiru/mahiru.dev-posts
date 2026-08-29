@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import EntryList from '../components/EntryList.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('posts'))
+  .filter((e) => !e.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const latest = entries.slice(0, 3);
+---
+
+<Base title="mahiru" active="home">
+  <section class="wrap">
+    <div class="panel hero">
+      <h1 class="hero-name">mahiru<span class="cursor">_</span></h1>
+    </div>
+  </section>
+
+  {latest.length > 0 && (
+    <section class="wrap">
+      <div class="panel">
+        <div class="home-section-label"><span class="eyebrow">Latest</span></div>
+        <EntryList entries={latest} total={entries.length} />
+        <p class="more-link">
+          <a href="/posts" class="back-link" style="flex-direction:row-reverse;">
+            all posts <span aria-hidden="true">&rarr;</span>
+          </a>
+        </p>
+      </div>
+    </section>
+  )}
+</Base>
