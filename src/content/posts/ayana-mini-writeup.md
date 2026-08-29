@@ -29,7 +29,8 @@ Hypothesis #7 ist deshalb kein Rätsel mit einer Lösung. Sie zeigt, dass der Ve
 
 ## „Alle Existenzen sind eine Seele" — symbolisch, nicht überprüfbar
 
-Aussagen wie *alle Existenzen sind eine Seele* sind daher nicht buchstäblich gemeint, sondern sind Beispiele für Möglichkeiten. Unbeantwortbare Möglichkeiten derer Lösung unbeantwortbar ist.
+Aussagen wie *alle Existenzen sind eine Seele* sind daher nicht buchstäblich gemeint, sondern sind Beispiele für Möglichkeiten. Unbeantwortbare Möglichkeiten, für die es keine Lösung gibt.
+
 ## Das Scheitern ist der Punkt
 
 Der eigentliche Sinn liegt also nicht darin, eine Antwort zu finden, sondern darin, zu erkennen: <mark>Manche Dinge können nicht in Sätzen existieren, sie lassen sich nur andeuten oder erfahren.</mark> Und genau dieses Scheitern beim Erklären ist der Punkt, den die Geschichte sichtbar machen will.
