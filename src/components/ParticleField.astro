@@ -28,7 +28,7 @@
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
     }
     const accentHex = getComputedStyle(document.documentElement)
-      .getPropertyValue('--accent') || '#e6b25e';
+      .getPropertyValue('--accent') || '#b490fc';
     const [AR, AG, AB] = hexToRgb(accentHex);
 
     // Wortfetzen + Dev-Glyphen — die zwei Identitäten vereint.
