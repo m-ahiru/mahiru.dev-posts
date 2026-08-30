@@ -18,7 +18,7 @@ Soares ist zu schwach zum Handeln, hasst aber das Träumen ebenso. Um der Leere 
 
 Warum handelt er nicht? Weil ihn das Handeln in seinen Augen immer enttäuscht, denn <mark>die Vorstellung ist stets besser als das Erleben</mark>. Er sagt, sich eine Reise vorzustellen sei immer schöner, als die Reise wirklich zu erleben; Blumen seien in der Vorstellung immer bunter und heller als in Wirklichkeit. Deshalb handelt er nicht, kann und will es auch gar nicht, weil er weiß, dass er ohnehin enttäuscht würde.
 
-Das Schreiben dagegen kann ihn nicht enttäuschen, weil er es nicht um eines Ergebnisses willen tut, sondern einfach, um der Leere zu entkommen. Auch die Prosa ist für ihn eine Form des Träumens: Er nennt sie das Erschaffen eines Universums oder eines Traums, das sich mit anderen teilen lässt. So lebt er das Leben anderer in seinen Träumen und erschafft Figuren, Landschaften, Freunde, Ichs.
+Das Schreiben dagegen kann ihn nicht enttäuschen, weil er es nicht um eines Ergebnisses willen tut, sondern einfach, um der Leere zu entkommen. <mark>Auch die Prosa ist für ihn eine Form des Träumens:</mark> Er nennt sie das Erschaffen eines Universums oder eines Traums, das sich mit anderen teilen lässt. So lebt er das Leben anderer in seinen Träumen und erschafft Figuren, Landschaften, Freunde, Ichs.
 
 ## Soares als Halbheteronym
 
@@ -82,7 +82,7 @@ Der Ausgangspunkt ist die Schopenhauer'sche Tretmühle: Der Wille ist Mangel, un
 
 Soares nimmt den anderen Ausgang. Er schaltet den Willen nicht ab, er richtet ihn auf ein _unmögliches_ Objekt. Ein Ziel, das man nie erreicht, kann man ewig wollen, und Erreichen wäre bei ihm ohnehin Reduktion. Das ist dasselbe Prinzip wie zuvor beim Traum über der Realität, nur auf den Willen selbst gewendet: Wie die vorgestellte Reise das wirkliche Erleben schlägt, so schlägt das unerreichte Ziel jedes erreichte. Die Kalvarienberg-Stelle sagt es wörtlich: Ankommen hieße, „in gewisser Weise weniger sein". Er wählt also das eine Ziel, dessen Nicht-Erreichbarkeit es unendlich hält.
 
-> Das Leben, sagte Tarde, ist die Suche nach dem Unmöglichen vermittels des Unnützen.
+> Wir sollten stehts das Unmögliche suchen, denn dies ist unser Geschick; wir sollten es mit Hilfe des Unnützen suchen, denn kein Weg führt daran vorbei; wir sollten uns zu dem Bewußtsein aufschwingen, daß wir nichts suchen, was wir finden könnten, und daß nichts auf unserem Weg eine Zärtlichkeit oder wehmütige Erinnerung verdient.
 
 Das ist kein Verzicht aufs Wollen, sondern Wollen als reine Form, entleert von erreichbarem Inhalt. Der Wille lernt, sich von der eigenen Frustration zu nähren, statt an Befriedigung einzugehen.
 
