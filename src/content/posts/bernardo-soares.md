@@ -80,6 +80,8 @@ Soares gilt als der Nicht-Handelnde schlechthin: ein Hilfsbuchhalter, der das Mi
 
 Der Ausgangspunkt ist die Schopenhauer'sche Tretmühle: Der Wille ist Mangel, und das „Bekommen" zerstört gerade das eigentliche _Es-haben-Wollen_. Erfüllung tötet den Wunsch, der sie trug, und gebiert sofort den nächsten. Schopenhauers Ausweg wäre, den Willen ganz stillzulegen, also Askese, Quietismus. _Das_ wäre der echte Nicht-Handelnde.
 
+> Sollte ich eines Tages das Kreuz meiner Absichten auf den Kalvarienberg tragen können, werde ich einen Kalvarienberg auf dem Kalvarienberg vorfinden und Sehnsucht verspüren nach der Zeit, als er für mich noch nichtig, müßig und unerreichbar war. Ich werde in gewisser Weise weniger sein.
+
 Soares nimmt den anderen Ausgang. Er schaltet den Willen nicht ab, er richtet ihn auf ein _unmögliches_ Objekt. Ein Ziel, das man nie erreicht, kann man ewig wollen, und Erreichen wäre bei ihm ohnehin Reduktion. Das ist dasselbe Prinzip wie zuvor beim Traum über der Realität, nur auf den Willen selbst gewendet: Wie die vorgestellte Reise das wirkliche Erleben schlägt, so schlägt das unerreichte Ziel jedes erreichte. Die Kalvarienberg-Stelle sagt es wörtlich: Ankommen hieße, „in gewisser Weise weniger sein". Er wählt also das eine Ziel, dessen Nicht-Erreichbarkeit es unendlich hält.
 
 > Wir sollten stehts das Unmögliche suchen, denn dies ist unser Geschick; wir sollten es mit Hilfe des Unnützen suchen, denn kein Weg führt daran vorbei; wir sollten uns zu dem Bewußtsein aufschwingen, daß wir nichts suchen, was wir finden könnten, und daß nichts auf unserem Weg eine Zärtlichkeit oder wehmütige Erinnerung verdient.
