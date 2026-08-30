@@ -10,6 +10,20 @@ draft: false
 ---
 # Bernardo Soares und Das Buch der Unruhe: eine Analyse
 
+## Inhalt
+
+- [Handeln, Träumen und die Leere](#handeln-träumen-und-die-leere)
+- [Das Prinzip: Der Traum über der Realität](#das-prinzip-der-traum-über-der-realität)
+- [Soares als Halbheteronym](#soares-als-halbheteronym)
+- [Beruf und Wohnung: die Parallele von Leben und Kunst](#beruf-und-wohnung-die-parallele-von-leben-und-kunst)
+- [Das Heteronym-System: Caeiro, Reis und Campos](#das-heteronym-system-caeiro-reis-und-campos)
+- [Warum Soares nicht in den Tod geht](#warum-soares-nicht-in-den-tod-geht)
+- [Das Fragment als Spiegel seiner Person](#das-fragment-als-spiegel-seiner-person)
+- [Der Wille und das Ziel der Nicht-Existenz](#der-wille-und-das-ziel-der-nicht-existenz)
+  - [Schopenhauers Willensfalle](#schopenhauers-willensfalle)
+  - [Das unmögliche Ziel schlechthin](#das-unmögliche-ziel-schlechthin)
+  - [Zielen, nicht Ziel](#zielen-nicht-ziel)
+
 ## Handeln, Träumen und die Leere
 
 Soares ist zu schwach zum Handeln, hasst aber das Träumen ebenso. Um der Leere dennoch irgendwie zu entkommen, bleibt ihm nur eines von beidem, also lebt er ein Gemisch aus beidem: Sein monotones Leben verrichtet er auf Autopilot, sein eigentliches Leben findet in den Träumen statt. <mark>Das einzige wirkliche Handeln, das ihm bleibt, ist das Schreiben</mark>, weil es ihn zu nichts verpflichtet (Non-Commitment).
