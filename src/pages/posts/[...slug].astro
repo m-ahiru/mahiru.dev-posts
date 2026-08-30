@@ -18,7 +18,7 @@ const fmt = (d: Date) =>
   d.toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' });
 ---
 
-<Base title={`${title} — mahiru`} description={description ?? `Post: ${title}`} progress>
+<Base title={`${title} — mahiru`} description={description ?? `Post: ${title}`} image={cover} progress>
   <article class="wrap">
     <div class="panel article-panel">
       <header class="article-head">
