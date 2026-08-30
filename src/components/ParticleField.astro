@@ -32,12 +32,113 @@
     const [AR, AG, AB] = hexToRgb(accentHex);
 
     // Wortfetzen + Dev-Glyphen — die zwei Identitäten vereint.
-    const pool = [
-      'desassossego', 'Traum', 'Wille', 'Ich', 'Soares', 'Caeiro', 'Campos',
-      'Reis', 'Bühne', 'Unruhe', 'sonhar', 'heteronym', 'Fragment', 'Sehnsucht',
-      'nada', 'ser', 'não-ser', 'Kalvarienberg', 'wollen', 'reduzieren',
-      '{ }', ';', '//', '<>', '/*', '*/', '[]', '=>', '~/', '§', '¶',
-    ];
+const pool = [
+  // Pessoa / Literatur / Figuren
+  'desassossego', 'Traum', 'Wille', 'Ich', 'Soares', 'Caeiro', 'Campos',
+  'Reis', 'Bühne', 'Unruhe', 'sonhar', 'heteronym', 'Fragment', 'Sehnsucht',
+  'nada', 'ser', 'não-ser', 'Kalvarienberg', 'wollen', 'reduzieren',
+
+  // Literatur
+  'Roman', 'Erzählung', 'Novelle', 'Prosa', 'Vers', 'Strophe', 'Zeile',
+  'Absatz', 'Kapitel', 'Vorwort', 'Nachwort', 'Epilog', 'Prolog',
+  'Anmerkung', 'Fußnote', 'Randnotiz', 'Zitat', 'Widmung', 'Motto',
+  'Handlung', 'Figur', 'Erzähler', 'Stimme', 'Perspektive', 'Motiv',
+  'Metapher', 'Allegorie', 'Parabel', 'Chiffre', 'Gleichnis',
+  'Auslassung', 'Ellipse', 'Wiederholung', 'Variation', 'Echo',
+  'Klammer', 'Zwischenraum', 'Leerraum', 'Bruch', 'Sprung', 'Pause',
+
+  // Lesen / Buch
+  'lesen', 'Lektüre', 'Lesart', 'Leser', 'Buch', 'Blatt', 'Seite',
+  'Druck', 'Satz', 'Schrift', 'Typografie', 'Manuskript', 'Entwurf',
+  'Korrektur', 'Rand', 'Rücken', 'Einband', 'Inhalt', 'Register',
+  'Verzeichnis', 'Bibliothek', 'Archiv', 'Katalog', 'Exzerpt',
+  'Notiz', 'Stelle', 'Passage', 'Abschnitt', 'Band', 'Ausgabe',
+  'Auflage', 'Original', 'Übersetzung', 'Übertragung', 'Glossar',
+  'Palimpsest', 'Konvolut', 'Nachlass', 'Faksimile',
+
+  // Schreiben / Sprache
+  'schreiben', 'Wort', 'Satz', 'Silbe', 'Laut', 'Stimme', 'Sprache',
+  'Schweigen', 'sprechen', 'benennen', 'verschweigen', 'umschreiben',
+  'übersetzen', 'deuten', 'lesen', 'verstehen', 'erinnern', 'vergessen',
+  'sagen', 'unsagen', 'Namen', 'Bedeutung', 'Sinn', 'Unsinn',
+  'Zeichen', 'Spur', 'Abdruck', 'Anfang', 'Ende', 'Dazwischen',
+
+  // etwas philosophischer
+  'Sein', 'Nichts', 'Werden', 'Zeit', 'Raum', 'Wahrheit', 'Wirklichkeit',
+  'Möglichkeit', 'Zweifel', 'Erkenntnis', 'Bewusstsein', 'Erinnerung',
+  'Vergessen', 'Abwesenheit', 'Gegenwart', 'Vergangenheit', 'Zukunft',
+  'Fremdheit', 'Nähe', 'Distanz', 'Identität', 'Alterität', 'Kontingenz',
+  'Existenz', 'Essenz', 'Leere', 'Endlichkeit', 'Unendlichkeit',
+  'Verlust', 'Anwesenheit', 'Abwesenheit', 'Widerspruch', 'Ambivalenz',
+
+  // schöne / präzise Wörter
+  'Dämmerung', 'Zwielicht', 'Nachhall', 'Vorahnung', 'Nachbild',
+  'Zwischenzeit', 'Zwischenraum', 'Gegenlicht', 'Nachtseite',
+  'Innenraum', 'Außenwelt', 'Fernweh', 'Heimweh', 'Sehnsucht',
+  'Melancholie', 'Schwermut', 'Unruhe', 'Stille', 'Vergeblichkeit',
+  'Vergänglichkeit', 'Einsamkeit', 'Abgrund', 'Horizont', 'Ferne',
+  'Ufer', 'Schatten', 'Spiegel', 'Staub', 'Nebel', 'Dunkel',
+  'Licht', 'Flucht', 'Rückkehr', 'Irrweg', 'Umweg', 'Abwesenheit',
+
+  // Portugiesisch
+  'saudade', 'desassossego', 'sonho', 'sonhar', 'ser', 'nada',
+  'ninguém', 'alma', 'mar', 'noite', 'silêncio', 'vontade',
+  'verdade', 'mentira', 'tempo', 'longe', 'perto', 'talvez',
+  'sempre', 'nunca', 'agora', 'ontem', 'amanhã', 'tudo', 'nada',
+
+  // Französisch / literarisches Vokabular
+  'ailleurs', 'rêve', 'oubli', 'souvenir', 'silence', 'vertige',
+  'néant', 'absence', 'présence', 'écriture', 'lecture', 'marge',
+  'fragment', 'hasard', 'ennui', 'désir', 'lueur', 'nuit',
+
+  // Latein / Griechisch
+  'nihil', 'esse', 'sum', 'memento', 'sine', 'finis', 'vita',
+  'tempus', 'locus', 'verba', 'vox', 'ordo', 'fragmentum',
+  'ἀλήθεια', 'λόγος', 'μνήμη', 'λήθη', 'τόπος', 'χρόνος',
+
+  // Begriffe, die typografisch / konzeptuell funktionieren
+  'etc.', 'sic', 'ibid.', 'cf.', 'N.B.', 'postscriptum', 'manus',
+  'draft', 'fragment', 'untitled', 'no title', 'o. T.', 'ohne Titel',
+  'verschwunden', 'unvollendet', 'vorläufig', 'wiedergefunden',
+  'ungelesen', 'unlesbar', 'unübersetzt', 'unbenannt', 'unausgesprochen',
+
+  // einzelne Verben
+  'warten', 'zögern', 'irren', 'suchen', 'finden', 'verlieren',
+  'bleiben', 'gehen', 'kommen', 'kehren', 'sehen', 'schauen',
+  'träumen', 'erwachen', 'erinnern', 'vergessen', 'begehren',
+  'zweifeln', 'schweigen', 'sprechen', 'lesen', 'schreiben',
+  'streichen', 'löschen', 'bewahren', 'wiederholen', 'beginnen',
+  'enden',
+
+  // Zeichen / Typografie
+  '{ }', '( )', '[ ]', '< >', '⟨ ⟩', '‹ ›', '« »', '„ “', '‚ ‘',
+  '—', '–', '…', '·', '⁂', '※', '†', '‡', '§', '¶', '∞',
+  '∅', '≠', '≈', '≡', '∴', '∵', '→', '←', '↔', '⇒', '⇢',
+  '∴', '∵', '∼', '≈', '≠', '≤', '≥', '±', '×', '÷',
+  '°', '′', '″', '※', '⁝', '⁙', '⁖', '⁘', '⁙',
+  '⌁', '⌇', '⌘', '⟡', '◊', '◇', '○', '●', '□', '■',
+  '░', '▒', '▓', '∞', '∅', '∎',
+
+  // Code-/Markup-artige Zeichen, passend zum bestehenden Set
+  '{ }', '{{ }}', '[]', '[…]', '()', '(...)', '<>', '<…>',
+  '=>', '->', '<-', '<=>', '::', ':=', '==', '!=', '&&', '||',
+  '//', '/*', '*/', '/**/', '...', '..', '…', '___', '__',
+  '~/ ', './', '../', '#', '##', '@', '&', '|', '^', '~',
+  ':::', ';;', ';;;', '---', '--', '++', '??', '?!', '!?',
+  '/* fragment */', '// notiz', '...',
+
+  // kleine Bruchstücke / Formulierungen
+  'vielleicht', 'niemals', 'irgendwo', 'nirgendwo', 'anderswo',
+  'dazwischen', 'dennoch', 'jedoch', 'womöglich', 'einst',
+  'immer noch', 'nicht mehr', 'noch nicht', 'wieder',
+  'zum ersten Mal', 'zum letzten Mal', 'ohne Anfang', 'ohne Ende',
+
+  // Pessoa-nahe / heteronymische Atmosphäre
+  'Livro', 'Livro do Desassossego', 'Bernardo Soares',
+  'Álvaro de Campos', 'Alberto Caeiro', 'Ricardo Reis',
+  'Fernando Pessoa', 'ortónimo', 'heteronímia', 'semi-heterónimo',
+  'desdobramento', 'máscara', 'persona', 'alter ego',
+];
     const seps = ['  ·  ', '   ', '  /  ', '  //  '];
 
     // Jeder Node = 2–3 Fetzen zusammen
