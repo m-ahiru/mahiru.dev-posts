@@ -11,10 +11,13 @@ interface Props {
   active?: 'home' | 'posts' | 'rankings' | undefined;
   /** show the reading progress bar (post pages) */
   progress?: boolean;
+  /** Share-Bild fürs Embed (og:image), z.B. "/covers/xyz.jpg" */
+  image?: string;
 }
 
-const { title, description = 'Posts', active, progress = false } = Astro.props;
+const { title, description = 'Posts', active, progress = false, image } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
 ---
 
 <!doctype html>
@@ -34,7 +37,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
   </head>
   <body>
     {progress && <ReadingProgress />}
