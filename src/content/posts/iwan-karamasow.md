@@ -1,7 +1,7 @@
 ---
 title: "Iwan Karamasow Analyse"
 date: 2026-08-22
-description: "Iwan, der Konflikt, generelle TBK Themes"
+description: "Iwans Nihilismus, Zossimas Antwort und die Rolle Alyoshas als stiller Beobachter des Konflikts."
 work: "Die Brüder Karamasow"
 author: "Fyodor Dostoevsky"
 cover: "/covers/ivan.png"
