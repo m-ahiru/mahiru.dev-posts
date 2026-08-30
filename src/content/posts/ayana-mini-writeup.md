@@ -9,6 +9,15 @@ coverAlt: "Ayana"
 draft: false
 ---
 
+## Inhalt
+
+- [An der Grenze der Sprache](#an-der-grenze-der-sprache)
+- [Der Fehler: sie als Faktenaussage lesen](#der-fehler-sie-als-faktenaussage-lesen)
+- [Ayana: das Unsagbare, in Sprache gezwungen](#ayana-das-unsagbare-in-sprache-gezwungen)
+- [Hypothesis #7: kein Rätsel mit Lösung](#hypothesis-7-kein-rätsel-mit-lösung)
+- [„Alle Existenzen sind eine Seele" — symbolisch, nicht überprüfbar](#alle-existenzen-sind-eine-seele--symbolisch-nicht-überprüfbar)
+- [Das Scheitern ist der Punkt](#das-scheitern-ist-der-punkt)
+
 ## An der Grenze der Sprache
 
 Geht man vom *Tractatus* aus, bewegt sich *Ayana* als Charakter genau an der Grenze, die Wittgenstein beschreibt: dort, wo Sprache nicht mehr sinnvoll funktioniert.

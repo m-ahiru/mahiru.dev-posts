@@ -9,6 +9,17 @@ coverAlt: "Iwan Karamsow"
 draft: false
 ---
 
+## Inhalt
+
+- [Revolte & Der Großinquisitor](#revolte--der-großinquisitor)
+- [Der Teufelsdialog](#der-teufelsdialog)
+- [Alyoshas Rolle: Zossima vs. Iwan und Kolja](#alyoshas-rolle-zossima-vs-iwan-und-kolja)
+  - [Iwans Argument](#iwans-argument)
+  - [Zossimas Argument](#zossimas-argument)
+  - [Die Handlung: Smerdyakov, der Mord und der Prozess](#die-handlung-smerdyakov-der-mord-und-der-prozess)
+  - [Alyosha als Beobachter](#alyosha-als-beobachter)
+  - [Kolja und das Ende](#kolja-und-das-ende)
+
 ## Revolte & Der Großinquisitor
 
 Glauben erfordert Kraft, und diese Kraft haben zum Beispiel Reiche mehr als Arme. Also ist der Glaube nur für die Starken da? Obwohl genau die Schwachen den Glauben brauchen.
