@@ -106,7 +106,7 @@ Das ist kein Verzicht aufs Wollen, sondern Wollen als reine Form, entleert von e
 
 Sein Kernwunsch, nie gewesen zu sein, das Ich zu tilgen, ist dabei das strukturell unmögliche Ziel überhaupt. Das Wollen der eigenen Auslöschung wird von einem seienden, wollenden Ich vollzogen und setzt damit genau die Existenz wieder, die es tilgen soll. Erfolg bräuchte ein Wollen, das die eigene Auslöschung überlebt.[^1] Geht nicht. Der Motor läuft per Konstruktion, ewig, ohne Ankunft.
 
-Wo man meinen könnte, das kippe doch in echten Quietismus, ist das Tresor-Bild: aufbewahrt „sicher vor den Unbilden und den Glücksmomenten", also raus aus der ganzen Oszillation. Aber die Zeile direkt daneben verrät ihn, denn er verspürt Sehnsucht, eines Tages eine Sehnsucht verspüren zu können, die selbst dann noch sinnlos ist. Selbst das Verstummen-Wollen kommt bei ihm nur als Wille heraus, der sich rekursiv weiterwill. Er kann den Willen nicht einmal abwollen. Das schwächt die These nicht, es besiegelt sie.
+Selbst das Verstummen-Wollen kommt bei ihm nur als Wille heraus, der sich rekursiv weiterwill. Er kann den Willen nicht einmal abwollen. Das schwächt die These nicht, es besiegelt sie.
 
 ### Zielen, nicht Ziel
 
