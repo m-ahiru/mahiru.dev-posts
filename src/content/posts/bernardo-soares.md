@@ -10,6 +10,8 @@ draft: false
 ---
 # Bernardo Soares und Das Buch der Unruhe: eine Analyse
 
+>Alles verflüchtigt sich mir. Mein ganzes Leben, meine Erinnerungen, meine Phantasie und was sie enthält, meine Persönlichkeit, alles verflüchtigt sich mir. Ständig fühle ich, daß ich ein anderer war, daß ich als anderer fühlte, daß ich als anderer dachte. Ich sehe ein Schauspiel mit einem nicht dazugehörigen Bühnenbild. Und was ich da sehe, das bin ich.
+
 ## Inhalt
 
 - [Handeln, Träumen und die Leere](#handeln-träumen-und-die-leere)
