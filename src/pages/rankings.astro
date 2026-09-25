@@ -111,6 +111,19 @@ const sets = [
         <button role="tab" aria-selected="false" data-tab="media">Media</button>
       </div>
 
+      <div class="j-sound" data-sound>
+        <audio src="/audio/la-revacholiere.mp3" loop preload="auto"></audio>
+        <button type="button" class="j-sound-btn" aria-label="Sound an" aria-pressed="false">
+          <svg class="ic-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" /><path d="M16 9a4 4 0 0 1 0 6" /><path d="M18.5 6.5a7.5 7.5 0 0 1 0 11" /></svg>
+          <svg class="ic-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" /><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" /></svg>
+          <span class="j-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
+        <label class="j-vol">
+          <span class="sr-only">Lautstärke</span>
+          <input type="range" min="0" max="100" step="1" value="60" />
+        </label>
+      </div>
+
       <div class="j-counter" aria-hidden="true">
         <span class="j-total meta"></span>
         <span class="j-bar"><span></span></span>
@@ -324,6 +337,78 @@ const sets = [
       layout();
     }
   </script>
+  <script>
+    // Musik: läuft in Schleife, solange man auf /rankings ist.
+    // Browser erlauben Ton erst nach einer Interaktion -> Start beim ersten Klick/Tap/Taste.
+    // Lautstärke über Web Audio (GainNode), damit der Regler auch auf iPhones wirkt.
+    const box = document.querySelector<HTMLElement>('[data-sound]');
+    if (box) {
+      const audio = box.querySelector('audio')!;
+      const btn = box.querySelector<HTMLButtonElement>('.j-sound-btn')!;
+      const range = box.querySelector<HTMLInputElement>('input[type=range]')!;
+      const KEY = 'mahiru:rankings-sound';
+      let saved = { muted: false, vol: 60 };
+      try { saved = { ...saved, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch {}
+      let muted = saved.muted, vol = saved.vol;
+      range.value = String(vol);
+
+      let ctx: AudioContext | null = null, gain: GainNode | null = null;
+      const target = () => (muted ? 0 : Math.pow(vol / 100, 2)); // quadratisch = natürlicheres Gefühl
+      const apply = (fade = 0.25) => {
+        const v = target();
+        if (gain && ctx) { gain.gain.cancelScheduledValues(ctx.currentTime); gain.gain.setTargetAtTime(v, ctx.currentTime, fade / 3); }
+        else audio.volume = v;
+        box.classList.toggle('is-muted', muted || vol === 0);
+        btn.setAttribute('aria-pressed', String(!muted));
+        btn.setAttribute('aria-label', muted ? 'Sound an' : 'Sound aus');
+        range.style.setProperty('--fill', `${vol}%`);
+        try { localStorage.setItem(KEY, JSON.stringify({ muted, vol })); } catch {}
+      };
+      const ensureGraph = () => {
+        if (ctx) return;
+        try {
+          const AC = window.AudioContext || (window as any).webkitAudioContext;
+          ctx = new AC();
+          gain = ctx.createGain();
+          gain.gain.value = 0;
+          ctx.createMediaElementSource(audio).connect(gain).connect(ctx.destination);
+        } catch { ctx = null; gain = null; }
+      };
+      const start = async () => {
+        if (muted) return;
+        ensureGraph();
+        try { await ctx?.resume(); await audio.play(); box.classList.add('is-playing'); apply(1.2); } catch {}
+      };
+
+      btn.addEventListener('click', () => {
+        muted = !muted;
+        if (!muted && audio.paused) start(); else apply();
+      });
+      range.addEventListener('input', () => {
+        vol = +range.value;
+        if (vol > 0 && muted) muted = false;
+        if (audio.paused && !muted) start(); else apply(0.05);
+      });
+
+      // erster echter Nutzer-Kontakt startet die Musik (falls nicht stumm)
+      const kick = (e: Event) => {
+        if (box.contains(e.target as Node)) return;
+        if (audio.paused) start();
+        ['pointerdown', 'keydown', 'touchend'].forEach((t) => removeEventListener(t, kick, true));
+      };
+      ['pointerdown', 'keydown', 'touchend'].forEach((t) => addEventListener(t, kick, true));
+      audio.addEventListener('pause', () => box.classList.remove('is-playing'));
+      audio.addEventListener('play', () => box.classList.add('is-playing'));
+      apply(0);
+      // Autoplay versuchen (klappt meist nur, wenn die Seite schon mal Ton hatte)
+      if (!muted) audio.play().then(() => apply(1.2)).catch(() => box.classList.add('needs-tap'));
+      // Tab im Hintergrund -> leiser/Pause, zurück -> weiter
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) audio.pause(); else if (!muted && box.classList.contains('was-started')) start();
+      });
+      audio.addEventListener('playing', () => box.classList.add('was-started'));
+    }
+  </script>
 </Base>
 
 <style is:global>
@@ -417,6 +502,28 @@ const sets = [
   .j-mm-dot.on { fill: var(--accent); }
   .j-mm-view { fill: color-mix(in srgb, var(--accent) 12%, transparent); stroke: var(--accent); stroke-width: 22; }
 
+
+  /* Sound-Regler */
+  .j-sound { position: absolute; top: calc(var(--header-h) + 22px); left: calc(var(--page-x) + 286px); z-index: 30; display: flex; align-items: center; gap: 6px; height: 54px; padding: 0 16px 0 4px; border: 1px solid var(--line-strong); border-radius: 999px; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .j-sound-btn { position: relative; width: 44px; height: 44px; border-radius: 999px; border: 0; background: none; color: var(--fg); cursor: pointer; display: grid; place-items: center; transition: color 0.2s, background 0.2s; }
+  .j-sound-btn:hover { background: rgba(255, 255, 255, 0.06); color: var(--accent); }
+  .j-sound-btn .ic-off { display: none; }
+  .j-sound.is-muted .ic-on { display: none; }
+  .j-sound.is-muted .ic-off { display: block; color: var(--fg-dim); }
+  .j-eq { position: absolute; right: 5px; bottom: 9px; display: flex; gap: 1.5px; align-items: flex-end; height: 9px; opacity: 0; transition: opacity 0.3s; }
+  .j-eq i { display: block; width: 2px; height: 100%; background: var(--accent); border-radius: 1px; transform-origin: bottom; animation: j-eq 0.9s ease-in-out infinite alternate; }
+  .j-eq i:nth-child(2) { animation-delay: -0.35s; } .j-eq i:nth-child(3) { animation-delay: -0.6s; }
+  .j-sound.is-playing:not(.is-muted) .j-eq { opacity: 1; }
+  @keyframes j-eq { from { transform: scaleY(0.25); } to { transform: scaleY(1); } }
+  .j-sound.needs-tap:not(.is-playing):not(.is-muted) .j-sound-btn { animation: j-tap 1.8s ease-in-out infinite; }
+  @keyframes j-tap { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent); } 50% { box-shadow: 0 0 0 8px transparent; } }
+  .j-vol { display: flex; align-items: center; }
+  .j-vol input { --fill: 60%; appearance: none; -webkit-appearance: none; width: 110px; height: 44px; background: transparent; cursor: pointer; margin: 0; }
+  .j-vol input::-webkit-slider-runnable-track { height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--accent) var(--fill), var(--fg-ghost) var(--fill)); }
+  .j-vol input::-moz-range-track { height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--accent) var(--fill), var(--fg-ghost) var(--fill)); }
+  .j-vol input::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5.5px; border-radius: 50%; background: var(--fg); box-shadow: 0 0 0 3px rgba(180, 144, 252, 0.35); }
+  .j-vol input::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: var(--fg); box-shadow: 0 0 0 3px rgba(180, 144, 252, 0.35); }
+  .j-sound.is-muted .j-vol input { opacity: 0.45; }
   .j-counter { position: absolute; left: var(--page-x); bottom: 2.5rem; z-index: 30; display: flex; align-items: center; gap: 1.1rem; }
   .j-bar { position: relative; width: 180px; height: 1px; background: var(--fg-ghost); }
   .j-bar span { position: absolute; left: 0; top: 0; height: 1px; width: 0; background: var(--accent); transition: width 0.5s; }
@@ -443,6 +550,9 @@ const sets = [
     .j-work { font-size: 1.05rem; }
     .j-minimap { display: none; }
     .j-toggle button, .j-slider { width: 112px; }
+    .j-sound { left: var(--page-x); top: calc(var(--header-h) + 84px); height: 48px; }
+    .j-sound-btn { width: 40px; height: 40px; }
+    .j-vol input { width: 96px; }
     .j-slider[data-pos='media'] { transform: translateX(112px); }
     .j-counter { bottom: 1.4rem; }
     .j-hint { display: none; }
