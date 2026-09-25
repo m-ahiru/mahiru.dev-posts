@@ -54,6 +54,25 @@ const toc = headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug !=
         </nav>
       )}
 
+      {toc.length > 0 && (
+        <details class="toc-m">
+          <summary>
+            <span class="eyebrow label">Inhalt</span>
+            <span class="count">{String(toc.filter((h) => h.depth === 2).length).padStart(2, '0')}</span>
+            <span class="chev" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+            </span>
+          </summary>
+          <ol>
+            {(() => { let n = 0; return toc.map((h) => (
+              <li class={h.depth === 3 ? 'sub' : undefined}>
+                <a href={`#${h.slug}`}><span class="num">{h.depth === 2 ? String(++n).padStart(2, '0') : ''}</span><span>{h.text}</span></a>
+              </li>
+            )); })()}
+          </ol>
+        </details>
+      )}
+
       <article class="article">
         <div class="prose" lang="de">
           <Content />

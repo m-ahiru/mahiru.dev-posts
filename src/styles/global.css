@@ -313,6 +313,25 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
 .toc a.is-active { color: var(--fg); border-color: var(--accent); }
 .toc a:hover { color: var(--fg); }
 
+/* Mobile-Verzeichnis: zugeklappte Karte, Chevron statt Plus */
+.toc-m { display: none; margin-bottom: 1.75rem; border: 1px solid var(--line); border-radius: 12px; background: rgba(10, 10, 12, 0.85); overflow: hidden; }
+.toc-m summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: 0.75rem;
+  min-height: 56px; padding: 0 1.1rem 0 1.25rem; -webkit-tap-highlight-color: transparent;
+}
+.toc-m summary::-webkit-details-marker { display: none; }
+.toc-m .label { color: var(--fg); }
+.toc-m .count { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); }
+.toc-m .chev { margin-left: auto; width: 32px; height: 32px; border-radius: 999px; border: 1px solid var(--line-strong); display: grid; place-items: center; color: var(--fg-dim); transition: transform 0.35s var(--ease-out), color 0.2s, border-color 0.2s; }
+.toc-m[open] .chev { transform: rotate(180deg); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+.toc-m ol { list-style: none; padding: 0.25rem 0 0.6rem; margin: 0; border-top: 1px solid var(--line); }
+.toc-m li a { display: grid; grid-template-columns: 2.1rem minmax(0, 1fr); align-items: baseline; gap: 0.25rem; padding: 0.7rem 1.25rem; font-size: 0.98rem; line-height: 1.4; color: var(--fg-dim); }
+.toc-m li a:active { background: rgba(255, 255, 255, 0.03); }
+.toc-m .num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); }
+.toc-m li + li a { border-top: 1px solid rgba(255, 255, 255, 0.04); }
+.toc-m li.sub a { padding-top: 0.45rem; padding-bottom: 0.45rem; font-size: 0.9rem; color: var(--fg-faint); border-top: 0; }
+.toc-m li.sub .num::before { content: ''; display: inline-block; width: 6px; height: 1px; background: var(--fg-ghost); vertical-align: middle; }
+
 .article {
   background: var(--panel); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px;
   padding: clamp(1.75rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 5rem);
@@ -331,10 +350,39 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
 .prose { font-size: 1.22rem; line-height: 1.8; color: #dedcd7; }
 .prose > * + * { margin-top: 1.35em; }
 .prose > :first-child { margin-top: 0; }
-.prose h1 { font-family: var(--display); font-weight: 600; font-size: 2.4rem; letter-spacing: -0.02em; color: var(--fg); line-height: 1.15; text-wrap: balance; }
-.prose h2 { font-family: var(--display); font-weight: 600; font-size: 2.1rem; letter-spacing: -0.015em; color: var(--fg); margin-top: 2.2em; line-height: 1.2; }
-.prose h3 { font-family: var(--display); font-weight: 600; font-style: italic; font-size: 1.5rem; color: var(--fg); margin-top: 2em; line-height: 1.25; }
-.prose h4 { font-family: var(--body); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--fg-dim); margin-top: 2em; }
+.prose h1 {
+  font-family: var(--display); font-style: italic; font-weight: 600; font-size: 2.6rem; line-height: 1.1; letter-spacing: -0.025em; text-wrap: balance;
+  background: linear-gradient(100deg, var(--fg) 0%, var(--fg) 45%, #cdb6ff 80%, var(--accent) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-bottom: 0.1em;
+}
+/* h2: Haarlinie mit lila Anfang + kleines Sakura-Blatt, kursive Display-Schrift */
+.prose h2 {
+  position: relative; margin-top: 2.9em; padding-top: 1.15em;
+  font-family: var(--display); font-style: italic; font-weight: 600; font-size: 2.2rem; line-height: 1.15; letter-spacing: -0.02em;
+  color: var(--fg); text-wrap: balance;
+}
+.prose h2::before {
+  content: ''; position: absolute; left: 22px; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, var(--accent) 0, color-mix(in srgb, var(--accent) 60%, transparent) 60px, rgba(255, 255, 255, 0.09) 140px, transparent 100%);
+}
+.prose h2::after {
+  content: ''; position: absolute; left: 0; top: -5px; width: 14px; height: 10px;
+  border-radius: 120% 0 120% 0; transform: rotate(-18deg);
+  background: linear-gradient(135deg, #e6d8ff 0%, #c7aefc 45%, var(--accent) 100%);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+/* h3: kleines Blatt davor, aufrecht, etwas ruhiger */
+.prose h3 {
+  margin-top: 2.1em; font-family: var(--display); font-weight: 600; font-size: 1.5rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--fg);
+  display: flex; align-items: baseline; gap: 0.6em;
+}
+.prose h3::before {
+  content: ''; flex-shrink: 0; width: 9px; height: 7px; transform: translateY(-0.15em) rotate(-18deg);
+  border-radius: 120% 0 120% 0; background: var(--accent); opacity: 0.85;
+}
+.prose h4 { font-family: var(--body); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); margin-top: 2em; }
+.prose h1 + h2, .prose > h2:first-child { margin-top: 1.6em; }
 .prose a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent-glow); text-underline-offset: 3px; transition: text-decoration-color 0.18s ease; }
 .prose a:hover { text-decoration-color: var(--accent); }
 .prose strong { color: var(--fg); font-weight: 700; }
@@ -359,9 +407,8 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
    ============================================================ */
 @media (max-width: 1100px) {
   .post-layout { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .toc { position: static; max-height: none; padding: 1.5rem 1.4rem; margin-bottom: 1.75rem; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--line); border-radius: 10px; }
-  .toc .label { color: var(--accent); }
-  .toc a.is-read, .toc a.is-active { color: var(--fg-dim); border-color: rgba(255, 255, 255, 0.08); }
+  .toc { display: none; }
+  .toc-m { display: block; }
   .post-wrap .more { margin-left: 0; max-width: none; }
   .teaser-stack { display: none; }
   .fan { width: 360px; height: 330px; }
@@ -382,6 +429,10 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
   .trail .desc { font-size: 0.98rem; }
   .rank-teaser { padding: 2.5rem 1.75rem; min-height: 0; }
 }
+@media (max-width: 760px) {
+  /* Korn-Overlay mit Blend-Mode ist auf Handys teuer */
+  .backdrop .grain { display: none; }
+}
 @media (max-width: 560px) {
   body { font-size: 17px; }
   .nav { gap: 1rem; }
@@ -391,7 +442,9 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
   .fan .p1 { transform: translate(-50px, 24px) rotate(-8deg); }
   .fan .p3 { transform: translate(50px, 24px) rotate(8deg); }
   .prose { font-size: 1.08rem; }
-  .prose h2 { font-size: 1.65rem; }
+  .prose h1 { font-size: 2rem; }
+  .prose h2 { font-size: 1.75rem; }
+  .prose h3 { font-size: 1.3rem; }
   .prose blockquote { font-size: 1.08rem; padding-left: 1.1rem; }
   .article { border-radius: 0; margin-inline: calc(var(--page-x) * -1); border-inline: 0; }
 }
@@ -404,6 +457,9 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .petals { display: none; }
+  /* Sakura bleiben auch hier, nur ruhiger (bewusste Ausnahme) */
+  .petal-x { animation-duration: 40s !important; animation-iteration-count: infinite !important; }
+  .petal-y { animation-duration: 8s !important; animation-iteration-count: infinite !important; }
+  .petal { animation-duration: 12s !important; animation-iteration-count: infinite !important; }
   .hero-name .cursor { opacity: 1; }
 }

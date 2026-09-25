@@ -44,23 +44,23 @@ const sets = [
     <div class="j-stage">
       {sets.map((set, si) => (
         <div class="j-set" data-set={set.key} data-n={set.N} data-w={W} data-h={set.H} hidden={si !== 0}>
-          <div class="j-world" style={`width:${W}px;height:${set.H}px`}>
-            {set.contours.map((c) => (
-              <span class="j-ring" style={`left:${c.l}px;top:${c.t}px;width:${c.d}px;height:${c.d}px`}></span>
-            ))}
-            <svg class="j-path" width={W} height={set.H} aria-hidden="true">
+          <div class="j-world">
+            <svg class="j-map" aria-hidden="true" preserveAspectRatio="none" viewBox={`0 0 ${W} ${set.H}`}>
+              <g class="j-rings">
+                {set.contours.map((c) => <circle cx={c.l + c.d / 2} cy={c.t + c.d / 2} r={c.d / 2} />)}
+              </g>
               <polyline points={set.points} class="j-path-base" />
               <polyline points={set.points} class="j-path-draw" />
             </svg>
-            <span class="j-pulse" style={`left:${set.stops[set.N - 1].x}px;top:${set.stops[set.N - 1].y - 40}px`}>
-              <span></span><span></span>
-            </span>
             {set.stops.map((s) => (
-              <div class={`j-node${s.last ? ' is-final' : ''}`} style={`left:${s.x}px;top:${s.y}px`}>
-                <span class="polaroid" style={`transform:rotate(${(s.rot * 0.35).toFixed(1)}deg)`}>
-                  <img src={s.image} alt="" loading="lazy" decoding="async" />
-                </span>
-                <span class="j-node-num">{s.n}</span>
+              <div class={`j-node${s.last ? ' is-final' : ''}`} data-x={s.x} data-y={s.y}>
+                <div class="j-node-in">
+                  {s.last && <span class="j-pulse" aria-hidden="true"><span></span><span></span></span>}
+                  <span class="polaroid" style={`transform:rotate(${(s.rot * 0.35).toFixed(1)}deg)`}>
+                    <img src={s.image} alt="" loading="lazy" decoding="async" />
+                  </span>
+                  <span class="j-node-num">{s.n}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -89,11 +89,11 @@ const sets = [
           ))}
 
           <div class="j-minimap" aria-hidden="true">
-            <div class="j-mm-inner" style={`width:${W}px;height:${set.H}px`}>
-              <svg width={W} height={set.H}><polyline points={set.points} /></svg>
-              {set.stops.map((s) => <span class="j-mm-dot" style={`left:${s.x - 80}px;top:${s.y - 80}px`}></span>)}
-              <span class="j-mm-view"></span>
-            </div>
+            <svg viewBox={`0 0 ${W} ${set.H}`} preserveAspectRatio="xMidYMid meet">
+              <polyline points={set.points} />
+              {set.stops.map((s) => <circle class="j-mm-dot" cx={s.x} cy={s.y} r="80" />)}
+              <rect class="j-mm-view" x="0" y="0" width="0" height="0" />
+            </svg>
           </div>
         </div>
       ))}
@@ -118,6 +118,8 @@ const sets = [
   </section>
 
   <script>
+    // Performance: keine riesigen Ebenen mehr. Die Karte ist ein bildschirmgroßes SVG,
+    // dessen viewBox die "Kamera" ist; Stationen & Seiten werden einzeln positioniert.
     const root = document.querySelector<HTMLElement>('[data-journey]');
     if (root) {
       const stage = root.querySelector<HTMLElement>('.j-stage')!;
@@ -128,59 +130,69 @@ const sets = [
       const barEl = root.querySelector<HTMLElement>('.j-bar span')!;
       const tabs = [...root.querySelectorAll<HTMLButtonElement>('.j-toggle button')];
       const slider = root.querySelector<HTMLElement>('.j-slider')!;
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       const INTRO = 0.45, END = 0.45;
+      const ROTS = [-7, 4, -3, 8, -5, 6, -2, 5, -6, 3, -4, 7, -8];
       const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
       const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
+      type Page = { el: HTMLElement; img: HTMLElement | null; num: HTMLElement | null };
+      type Node = { el: HTMLElement; x: number; y: number };
       type SetState = {
         el: HTMLElement; N: number; W: number; H: number;
-        world: HTMLElement; pages: HTMLElement[]; nodes: HTMLElement[]; dots: HTMLElement[];
-        pathDraw: SVGPolylineElement; pts: [number, number][]; seg: number[]; len: number;
-        intro: HTMLElement; mmInner: HTMLElement; mmView: HTMLElement;
+        world: HTMLElement; map: SVGSVGElement; rings: SVGGElement;
+        base: SVGPolylineElement; draw: SVGPolylineElement;
+        pts: [number, number][]; seg: number[]; len: number;
+        pages: Page[]; nodes: Node[]; dots: SVGCircleElement[];
+        intro: HTMLElement; mmView: SVGRectElement;
       };
 
       const sets = new Map<string, SetState>();
       root.querySelectorAll<HTMLElement>('.j-set').forEach((el) => {
-        const N = +el.dataset.n!, W = +el.dataset.w!, H = +el.dataset.h!;
-        const pathDraw = el.querySelector<SVGPolylineElement>('.j-path-draw')!;
-        const pts = pathDraw.getAttribute('points')!.split(' ').map((p) => p.split(',').map(Number) as [number, number]);
+        const draw = el.querySelector<SVGPolylineElement>('.j-path-draw')!;
+        const pts = draw.getAttribute('points')!.split(' ').map((p) => p.split(',').map(Number) as [number, number]);
         const seg = pts.map((p, i) => (i ? Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) : 0));
         const len = seg.reduce((a, b) => a + b, 0);
-        pathDraw.style.strokeDasharray = `${len}`;
+        draw.setAttribute('stroke-dasharray', String(len));
         sets.set(el.dataset.set!, {
-          el, N, W, H, pathDraw, pts, seg, len,
+          el, N: +el.dataset.n!, W: +el.dataset.w!, H: +el.dataset.h!,
           world: el.querySelector('.j-world')!,
-          pages: [...el.querySelectorAll<HTMLElement>('.j-page')],
-          nodes: [...el.querySelectorAll<HTMLElement>('.j-node')],
-          dots: [...el.querySelectorAll<HTMLElement>('.j-mm-dot')],
+          map: el.querySelector('.j-map')!,
+          rings: el.querySelector('.j-rings')!,
+          base: el.querySelector('.j-path-base')!,
+          draw, pts, seg, len,
+          pages: [...el.querySelectorAll<HTMLElement>('.j-page')].map((p) => ({
+            el: p, img: p.querySelector('.j-page-img img'), num: p.querySelector('.j-page-num'),
+          })),
+          nodes: [...el.querySelectorAll<HTMLElement>('.j-node')].map((n) => ({ el: n, x: +n.dataset.x!, y: +n.dataset.y! })),
+          dots: [...el.querySelectorAll<SVGCircleElement>('.j-mm-dot')],
           intro: el.querySelector('.j-intro')!,
-          mmInner: el.querySelector('.j-mm-inner')!,
           mmView: el.querySelector('.j-mm-view')!,
         });
       });
 
       let active = sets.get('chars')!;
-      let step = 900;
+      let step = 900, vw = 0, vh = 0;
+      let target = 0, gs = 0, raf = 0;
+
+      const progress = () => {
+        const y = clamp(-root!.getBoundingClientRect().top, 0, root!.offsetHeight);
+        return clamp(y / step - INTRO, -INTRO, active.N - 1 + END);
+      };
 
       function layout() {
-        const vh = window.innerHeight;
+        vw = stage.clientWidth;
+        vh = stage.clientHeight;
         step = Math.max(720, vh * 1.05);
-        root!.style.height = `${(active.N - 1 + END + INTRO) * step + vh}px`;
+        root!.style.height = `${Math.round((active.N - 1 + END + INTRO) * step + vh)}px`;
         totEl.textContent = String(active.N).padStart(2, '0');
-        // Minimap einpassen
-        const mm = active.mmInner.parentElement!;
-        const s = Math.min(mm.clientWidth / active.W, mm.clientHeight / active.H);
-        active.mmInner.style.transform = `translate(${(mm.clientWidth - active.W * s) / 2}px, ${(mm.clientHeight - active.H * s) / 2}px) scale(${s})`;
-        render();
+        target = gs = progress();
+        render(gs);
       }
 
-      function render() {
+      function render(g: number) {
         const S = active, N = S.N;
-        const vw = stage.clientWidth, vh = stage.clientHeight;
-        const y = clamp(-root!.getBoundingClientRect().top, 0, root!.offsetHeight);
-        const g = clamp(y / step - INTRO, -INTRO, N - 1 + END);
-
         const i0 = clamp(Math.floor(g), 0, N - 1), t = g < 0 ? 0 : g - Math.floor(g);
         const i1 = Math.min(i0 + 1, N - 1);
         const mv = ease(clamp((t - 0.5) / 0.4, 0, 1));
@@ -200,56 +212,84 @@ const sets = [
         const pileScale = mobile ? 0.2 : 0.14;
         let veilV = 0;
 
-        S.pages.forEach((el, k) => {
+        S.pages.forEach((p, k) => {
           const last = k === N - 1, d = g - k;
           veilV = Math.max(veilV, pres(d, last));
-          let tf: string, op = 1, filt = 'none';
-          if (d < -0.2) { tf = `translateY(${vh}px) rotate(4deg)`; op = 0; }
-          else if (d < 0) { const q = 1 - ease((d + 0.2) / 0.2); tf = `translateY(${(q * vh * 0.92).toFixed(0)}px) rotate(${(q * 4).toFixed(2)}deg)`; }
-          else if (d <= 0.45 || last) { tf = ''; }
-          else {
+          // nur sichtbar: kommende kurz vor Eintritt, aktuelle, und die obersten 4 im Stapel
+          const visible = d >= -0.2 && d < 4.8;
+          p.el.style.visibility = visible ? 'visible' : 'hidden';
+          if (!visible) return;
+          let tf = '', filt = 'none';
+          if (d < 0) {
+            const q = 1 - ease((d + 0.2) / 0.2);
+            tf = `translateY(${(q * vh * 0.92).toFixed(0)}px) rotate(${(q * 4).toFixed(2)}deg)`;
+          } else if (d > 0.45 && !last) {
             const q = ease(clamp((d - 0.45) / 0.3, 0, 1));
-            const sc = 1 - q * (1 - pileScale), r = [-7, 4, -3, 8, -5, 6, -2, 5, -6, 3, -4, 7, -8][k % 13] * q;
+            const sc = 1 - q * (1 - pileScale), r = ROTS[k % 13] * q;
             tf = `translate(${(PX * q).toFixed(0)}px,${((PY - k * 4) * q).toFixed(0)}px) scale(${sc.toFixed(3)}) rotate(${r.toFixed(1)}deg)`;
             filt = `brightness(${(1 - q * 0.35).toFixed(2)})`;
           }
-          el.style.transform = `translate(-50%,-50%) ${tf}`;
-          el.style.opacity = String(op);
-          el.style.filter = filt;
-          const img = el.querySelector<HTMLElement>('.j-page-img img');
-          if (img) img.style.transform = `scale(${(1.08 - clamp(d + 0.2, 0, 0.65) * 0.12).toFixed(3)})`;
-          const num = el.querySelector<HTMLElement>('.j-page-num');
-          if (num) num.style.transform = `translateY(${(clamp(-d, -1, 1) * 90).toFixed(0)}px)`;
-        });
-
-        S.nodes.forEach((el, k) => {
-          const near = clamp(1 - Math.abs(g - k) * 1.6, 0, 1);
-          el.style.opacity = g >= k - 0.2 ? (0.35 + 0.65 * near).toFixed(2) : '0.12';
-          el.style.filter = `grayscale(${(1 - near).toFixed(2)})`;
-          S.dots[k]?.classList.toggle('on', g >= k);
+          p.el.style.transform = `translate(-50%,-50%) ${tf}`;
+          p.el.style.filter = filt;
+          if (p.img) p.img.style.transform = `scale(${(1.08 - clamp(d + 0.2, 0, 0.65) * 0.12).toFixed(3)})`;
+          if (p.num) p.num.style.transform = `translateY(${(clamp(-d, -1, 1) * 90).toFixed(0)}px)`;
         });
 
         // Kamera
         const base = clamp(Math.min(vw / 1440, vh / 900), 0.42, 1.15);
         const z = (g < 0 ? 0.55 + 0.2 * (1 + g / INTRO) : 0.72 + 0.38 * veilV) * base;
         const r = Math.sin(g * 0.9) * 2;
-        S.world.style.transform = `translate(${vw / 2}px,${vh * 0.52}px) rotate(${r.toFixed(2)}deg) scale(${z.toFixed(3)}) translate(${(-cx).toFixed(1)}px,${(-cy).toFixed(1)}px)`;
-
+        const ox = vw / 2, oy = vh * 0.52;
+        S.world.style.transform = `rotate(${r.toFixed(2)}deg)`;
+        S.map.setAttribute('viewBox', `${(cx - ox / z).toFixed(1)} ${(cy - oy / z).toFixed(1)} ${(vw / z).toFixed(1)} ${(vh / z).toFixed(1)}`);
+        const sw = 1 / z;
+        S.rings.setAttribute('stroke-width', sw.toFixed(3));
+        S.base.setAttribute('stroke-width', (1.5 * sw).toFixed(3));
+        S.base.setAttribute('stroke-dasharray', `${(3 * sw).toFixed(2)} ${(9 * sw).toFixed(2)}`);
+        S.draw.setAttribute('stroke-width', (2 * sw).toFixed(3));
         let drawn = 0;
         for (let k = 1; k <= i0; k++) drawn += S.seg[k];
         if (i1 > i0) drawn += S.seg[i1] * mv;
-        S.pathDraw.style.strokeDashoffset = String(S.len - drawn);
+        S.draw.setAttribute('stroke-dashoffset', String(S.len - drawn));
+
+        const margin = 420 * z;
+        S.nodes.forEach((n, k) => {
+          const sx = ox + (n.x - cx) * z, sy = oy + (n.y - cy) * z;
+          const on = sx > -margin && sx < vw + margin && sy > -margin && sy < vh + margin;
+          n.el.style.visibility = on ? 'visible' : 'hidden';
+          if (on) {
+            const near = clamp(1 - Math.abs(g - k) * 1.6, 0, 1);
+            n.el.style.transform = `translate(${sx.toFixed(1)}px,${sy.toFixed(1)}px) scale(${z.toFixed(3)})`;
+            n.el.style.opacity = g >= k - 0.2 ? (0.35 + 0.65 * near).toFixed(2) : '0.12';
+            n.el.style.filter = near > 0.98 ? 'none' : `grayscale(${(1 - near).toFixed(2)})`;
+          }
+          S.dots[k]?.classList.toggle('on', g >= k);
+        });
 
         veil.style.opacity = (veilV * 0.9).toFixed(2);
         S.intro.classList.toggle('is-gone', g >= -0.15);
         hint.classList.toggle('is-gone', g >= -0.3);
 
-        const vpW = vw / z, vpH = vh / z;
-        Object.assign(S.mmView.style, { left: `${cx - vpW / 2}px`, top: `${cy - vpH / 2}px`, width: `${vpW}px`, height: `${vpH}px` });
+        S.mmView.setAttribute('x', (cx - vw / z / 2).toFixed(0));
+        S.mmView.setAttribute('y', (cy - vh / z / 2).toFixed(0));
+        S.mmView.setAttribute('width', (vw / z).toFixed(0));
+        S.mmView.setAttribute('height', (vh / z).toFixed(0));
 
         const cur = g < 0 ? N : N - Math.round(clamp(g, 0, N - 1));
         curEl.textContent = String(cur).padStart(2, '0');
         barEl.style.width = `${(((g + INTRO) / (N - 1 + END + INTRO)) * 100).toFixed(1)}%`;
+      }
+
+      // weiches Nachziehen statt CSS-Transitions (alles bleibt synchron)
+      function tick() {
+        const diff = target - gs;
+        gs = reduce || Math.abs(diff) < 0.0008 ? target : gs + diff * 0.14;
+        render(gs);
+        raf = gs !== target ? requestAnimationFrame(tick) : 0;
+      }
+      function onScroll() {
+        target = progress();
+        if (!raf) raf = requestAnimationFrame(tick);
       }
 
       function select(key: string) {
@@ -261,17 +301,20 @@ const sets = [
         tabs.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === key)));
         slider.dataset.pos = key;
         const top = root!.getBoundingClientRect().top + window.scrollY;
-        layout();
         window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
-        render();
+        layout();
       }
       tabs.forEach((b) => b.addEventListener('click', () => select(b.dataset.tab!)));
 
-      let ticking = false;
-      addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; render(); }); } }, { passive: true });
-      addEventListener('resize', layout);
+      addEventListener('scroll', onScroll, { passive: true });
+      // Mobile: Adressleiste ein/aus löst resize aus -> nur bei echter Größenänderung neu rechnen
+      let lastW = innerWidth, lastH = innerHeight;
+      addEventListener('resize', () => {
+        if (innerWidth === lastW && Math.abs(innerHeight - lastH) < 160) return;
+        lastW = innerWidth; lastH = innerHeight;
+        layout();
+      });
       layout();
-      root.classList.add('is-ready');
     }
   </script>
 </Base>
@@ -282,26 +325,26 @@ const sets = [
   .j-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
   .j-set[hidden] { display: none; }
 
-  .j-world { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; transition: transform 0.7s var(--ease-out); }
-  .j-ring { position: absolute; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--accent) 7%, transparent); }
-  .j-path { position: absolute; left: 0; top: 0; overflow: visible; }
-  .j-path polyline { fill: none; }
-  .j-path-base { stroke: var(--fg-ghost); stroke-width: 1.5; stroke-dasharray: 3 9; }
-  .j-path-draw { stroke: var(--accent); stroke-width: 2; transition: stroke-dashoffset 0.7s var(--ease-out); }
+  .j-world { position: absolute; inset: 0; transform-origin: 50% 52%; }
+  .j-map { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .j-map polyline, .j-map circle { fill: none; }
+  .j-rings { stroke: color-mix(in srgb, var(--accent) 9%, transparent); }
+  .j-path-base { stroke: var(--fg-ghost); }
+  .j-path-draw { stroke: var(--accent); }
 
-  .j-pulse { position: absolute; width: 0; height: 0; }
+  .j-node { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; visibility: hidden; }
+  .j-node-in { position: absolute; left: -120px; top: -116px; width: 240px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .j-node .polaroid { width: 216px; padding: 8px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8); }
+  .j-node-num { font-family: var(--display); font-weight: 700; font-size: 64px; line-height: 1; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1.2px var(--accent); }
+  .j-node.is-final .j-node-in { left: -170px; top: -170px; width: 340px; }
+  .j-node.is-final .polaroid { width: 316px; }
+  .j-node.is-final .j-node-num { font-size: 120px; }
+  .j-pulse { position: absolute; left: 170px; top: 130px; width: 0; height: 0; }
   .j-pulse span { position: absolute; left: -210px; top: -210px; width: 420px; height: 420px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent); animation: j-pulse 2.4s var(--ease-out) infinite; }
   .j-pulse span + span { animation-delay: 1.2s; }
   @keyframes j-pulse { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.8); opacity: 0; } }
 
-  .j-node { position: absolute; width: 240px; margin: -116px 0 0 -120px; display: flex; flex-direction: column; align-items: center; gap: 14px; transition: opacity 0.6s ease, filter 0.6s ease; }
-  .j-node .polaroid { width: 216px; padding: 8px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8); }
-  .j-node-num { font-family: var(--display); font-weight: 700; font-size: 64px; line-height: 1; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1.2px var(--accent); }
-  .j-node.is-final { width: 340px; margin: -170px 0 0 -170px; }
-  .j-node.is-final .polaroid { width: 316px; }
-  .j-node.is-final .j-node-num { font-size: 120px; }
-
-  .j-veil { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+  .j-veil { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); opacity: 0; pointer-events: none; }
   .j-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.85) 100%); }
 
   .j-intro { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 0 var(--page-x); pointer-events: none; transition: opacity 0.5s ease, transform 0.6s var(--ease-out); z-index: 5; }
@@ -315,14 +358,13 @@ const sets = [
     display: flex; overflow: hidden; background: var(--panel);
     border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 6px;
     box-shadow: 0 40px 120px rgba(0, 0, 0, 0.85);
-    opacity: 0; will-change: transform;
-    transition: transform 0.55s var(--ease-out), opacity 0.4s ease, filter 0.5s ease;
+    visibility: hidden;
   }
   .j-page-img { flex-shrink: 0; height: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: var(--bg-inset); }
-  .j-page-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease-out); }
+  .j-page-img img { width: 100%; height: 100%; object-fit: cover; }
   .j-page-body { position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.5rem, 3.5vw, 2.75rem) clamp(1.5rem, 3.5vw, 3rem); }
   .j-page-top { display: flex; justify-content: space-between; font-size: 0.68rem; letter-spacing: 0.16em; }
-  .j-page-num { position: absolute; right: 1.9rem; top: 4rem; font-family: var(--display); font-weight: 700; font-size: clamp(8rem, 16vw, 13.75rem); line-height: 1; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--accent) 50%, transparent); transition: transform 0.7s var(--ease-out); pointer-events: none; }
+  .j-page-num { position: absolute; right: 1.9rem; top: 4rem; font-family: var(--display); font-weight: 700; font-size: clamp(8rem, 16vw, 13.75rem); line-height: 1; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--accent) 50%, transparent); pointer-events: none; }
   .j-page-text { position: relative; display: flex; flex-direction: column; gap: 1rem; }
   .j-page-text h2 { font-family: var(--display); font-style: italic; font-weight: 600; font-size: clamp(2.2rem, 4.5vw, 3.9rem); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance; }
   .j-line { display: block; width: 72px; height: 1.5px; background: var(--accent); }
@@ -340,12 +382,11 @@ const sets = [
   .j-slider[data-pos='media'] { transform: translateX(132px); }
 
   .j-minimap { position: absolute; top: calc(var(--header-h) + 22px); right: var(--page-x); width: 110px; height: 150px; z-index: 30; border: 1px solid var(--line-strong); border-radius: 6px; background: rgba(0, 0, 0, 0.72); overflow: hidden; }
-  .j-mm-inner { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
-  .j-mm-inner svg { position: absolute; inset: 0; }
-  .j-mm-inner polyline { fill: none; stroke: var(--fg-faint); stroke-width: 34; }
-  .j-mm-dot { position: absolute; width: 160px; height: 160px; border-radius: 50%; background: var(--fg-ghost); transition: background 0.5s; }
-  .j-mm-dot.on { background: var(--accent); }
-  .j-mm-view { position: absolute; box-sizing: border-box; border: 18px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); transition: all 0.7s var(--ease-out); }
+  .j-minimap svg { width: 100%; height: 100%; display: block; }
+  .j-minimap polyline { fill: none; stroke: var(--fg-faint); stroke-width: 34; }
+  .j-mm-dot { fill: var(--fg-ghost); }
+  .j-mm-dot.on { fill: var(--accent); }
+  .j-mm-view { fill: color-mix(in srgb, var(--accent) 12%, transparent); stroke: var(--accent); stroke-width: 22; }
 
   .j-counter { position: absolute; left: var(--page-x); bottom: 2.5rem; z-index: 30; display: flex; align-items: center; gap: 1.1rem; }
   .j-bar { position: relative; width: 180px; height: 1px; background: var(--fg-ghost); }
@@ -360,12 +401,14 @@ const sets = [
 
   /* Rankings: Footer direkt nach der Reise ohne großen Abstand */
   body:has(.journey) .site-footer { margin-top: 0; }
+  html:has(.journey) { overscroll-behavior-y: none; }
 
   @media (max-width: 760px) {
     .j-page { flex-direction: column; width: min(360px, 88vw); height: auto; max-height: calc(100svh - 170px); }
     .j-page-img { width: 100%; height: auto; }
     .j-page-body { gap: 0.8rem; padding: 1.1rem 1.25rem 1.4rem; }
     .j-page-num { font-size: 5.5rem; top: 2.2rem; right: 1rem; }
+    .j-page-top span:last-child { display: none; }
     .j-page-text { gap: 0.55rem; }
     .j-page-text h2 { font-size: 1.9rem; }
     .j-work { font-size: 1.05rem; }
@@ -374,5 +417,6 @@ const sets = [
     .j-slider[data-pos='media'] { transform: translateX(112px); }
     .j-counter { bottom: 1.4rem; }
     .j-hint { display: none; }
+    .j-page.is-final { animation: none; box-shadow: 0 0 0 1px var(--accent), 0 0 50px color-mix(in srgb, var(--accent) 30%, transparent); }
   }
 </style>
