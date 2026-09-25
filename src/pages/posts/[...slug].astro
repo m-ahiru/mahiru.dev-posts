@@ -98,6 +98,16 @@ const toc = headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug !=
   </div>
 
   <script>
+    // Überschriften im Text weich einblenden, sobald sie ins Bild kommen
+    const heads = document.querySelectorAll<HTMLElement>('.prose h1, .prose h2, .prose h3');
+    if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('js-reveal');
+      const io = new IntersectionObserver((es) => es.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      }), { rootMargin: '0px 0px -12% 0px' });
+      heads.forEach((h) => io.observe(h));
+    }
+
     // Scrollspy: markiert im Verzeichnis den Abschnitt, in dem man gerade liest.
     const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a[data-toc]')];
     const targets = links

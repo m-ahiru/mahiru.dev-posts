@@ -3,8 +3,9 @@
    violet-black · Fraunces (display) / Literata (body)
    ============================================================ */
 
-@import '@fontsource-variable/fraunces';
-@import '@fontsource-variable/fraunces/wght-italic.css';
+/* full = alle Achsen (opsz, wght, SOFT, WONK) -> für die verzierten Überschriften */
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/fraunces/full-italic.css';
 @import '@fontsource-variable/literata';
 @import '@fontsource-variable/literata/wght-italic.css';
 
@@ -350,18 +351,26 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
 .prose { font-size: 1.22rem; line-height: 1.8; color: #dedcd7; }
 .prose > * + * { margin-top: 1.35em; }
 .prose > :first-child { margin-top: 0; }
-.prose h1 {
-  font-family: var(--display); font-style: italic; font-weight: 600; font-size: 2.6rem; line-height: 1.1; letter-spacing: -0.025em; text-wrap: balance;
-  background: linear-gradient(100deg, var(--fg) 0%, var(--fg) 45%, #cdb6ff 80%, var(--accent) 100%);
+/* Überschriften im Text: Fraunces mit SOFT/WONK-Achsen (weichere, verspieltere Formen),
+   Verlauf Weiß -> Lila mit langsamem Schimmer, lila Initiale, sanftes Glühen */
+.prose h1, .prose h2, .prose h3 {
+  font-family: var(--display); font-style: italic; text-wrap: balance;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  background: linear-gradient(100deg, #f6f2ff 0%, var(--fg) 35%, #d9c8ff 62%, var(--accent) 82%, #f6f2ff 100%);
+  background-size: 220% 100%; background-position: 0% 0;
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  padding-bottom: 0.1em;
+  filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent) 22%, transparent));
 }
-/* h2: Haarlinie mit lila Anfang + kleines Sakura-Blatt, kursive Display-Schrift */
-.prose h2 {
-  position: relative; margin-top: 2.9em; padding-top: 1.15em;
-  font-family: var(--display); font-style: italic; font-weight: 600; font-size: 2.2rem; line-height: 1.15; letter-spacing: -0.02em;
-  color: var(--fg); text-wrap: balance;
+.prose h1::first-letter, .prose h2::first-letter, .prose h3::first-letter {
+  -webkit-text-fill-color: var(--accent); color: var(--accent);
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1, 'wght' 700;
 }
+.prose h1 { font-weight: 600; font-size: 2.8rem; line-height: 1.08; letter-spacing: -0.03em; padding-bottom: 0.08em; }
+.prose h1::first-letter { font-size: 1.3em; }
+
+/* h2: Haarlinie mit lila Anfang + kleines Sakura-Blatt darüber */
+.prose h2 { position: relative; margin-top: 2.9em; padding-top: 1.15em; font-weight: 600; font-size: 2.45rem; line-height: 1.12; letter-spacing: -0.025em; }
+.prose h2::first-letter { font-size: 1.28em; }
 .prose h2::before {
   content: ''; position: absolute; left: 22px; right: 0; top: 0; height: 1px;
   background: linear-gradient(90deg, var(--accent) 0, color-mix(in srgb, var(--accent) 60%, transparent) 60px, rgba(255, 255, 255, 0.09) 140px, transparent 100%);
@@ -372,15 +381,18 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
   background: linear-gradient(135deg, #e6d8ff 0%, #c7aefc 45%, var(--accent) 100%);
   box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 45%, transparent);
 }
-/* h3: kleines Blatt davor, aufrecht, etwas ruhiger */
-.prose h3 {
-  margin-top: 2.1em; font-family: var(--display); font-weight: 600; font-size: 1.5rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--fg);
-  display: flex; align-items: baseline; gap: 0.6em;
-}
+
+/* h3: ruhiger, kleines Blatt davor */
+.prose h3 { margin-top: 2.1em; font-weight: 500; font-size: 1.7rem; line-height: 1.22; letter-spacing: -0.015em; padding-left: 1.15em; position: relative; }
+.prose h3::first-letter { font-size: 1.18em; }
 .prose h3::before {
-  content: ''; flex-shrink: 0; width: 9px; height: 7px; transform: translateY(-0.15em) rotate(-18deg);
-  border-radius: 120% 0 120% 0; background: var(--accent); opacity: 0.85;
+  content: ''; position: absolute; left: 0; top: 0.55em; width: 10px; height: 7px; transform: rotate(-18deg);
+  border-radius: 120% 0 120% 0; background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 50%, transparent);
 }
+
+/* Einblenden beim Reinscrollen (nur mit JS) + Schimmer läuft einmal durch */
+.js-reveal .prose :is(h1, h2, h3) { opacity: 0; transform: translateY(18px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out), background-position 2.4s var(--ease-out); }
+.js-reveal .prose :is(h1, h2, h3).is-in { opacity: 1; transform: none; background-position: 100% 0; }
 .prose h4 { font-family: var(--body); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); margin-top: 2em; }
 .prose h1 + h2, .prose > h2:first-child { margin-top: 1.6em; }
 .prose a { color: var(--accent); text-decoration: underline; text-decoration-color: var(--accent-glow); text-underline-offset: 3px; transition: text-decoration-color 0.18s ease; }
@@ -442,9 +454,9 @@ main { flex: 1 0 auto; position: relative; z-index: 1; }
   .fan .p1 { transform: translate(-50px, 24px) rotate(-8deg); }
   .fan .p3 { transform: translate(50px, 24px) rotate(8deg); }
   .prose { font-size: 1.08rem; }
-  .prose h1 { font-size: 2rem; }
-  .prose h2 { font-size: 1.75rem; }
-  .prose h3 { font-size: 1.3rem; }
+  .prose h1 { font-size: 2.1rem; }
+  .prose h2 { font-size: 1.9rem; }
+  .prose h3 { font-size: 1.4rem; }
   .prose blockquote { font-size: 1.08rem; padding-left: 1.1rem; }
   .article { border-radius: 0; margin-inline: calc(var(--page-x) * -1); border-inline: 0; }
 }
