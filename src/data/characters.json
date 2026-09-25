@@ -1,6 +1,7 @@
 [
   { "name": "Composite Fernando Pessoa", "work": "The Book of Disquiet", "author": "Fernando Pessoa", "image": "/rankings/bernardo.png" },
   { "name": "Fang Yuan", "work": "Reverend Insanity", "author": "Ghu Zhen Ren", "image": "/rankings/fangyuan.jpg" },
+  { "name": "Ulrich", "work": "The Man without Qualities", "author": "Robert Musil", "image": "/rankings/ulrich.jpg" },
   { "name": "Augusto Pérez", "work": "Niebla/Mist", "author": "Miguel de Unamuno", "image": "/rankings/augusto.jpg" },
   { "name": "Altazor", "work": "Altazor", "author": "Vicente Huidobro", "image": "/rankings/altazor.png" },
   { "name": "Harrier du Bois", "work": "Disco Elysium", "author": "ZA/UM", "image": "/rankings/harrier.png" },
@@ -9,5 +10,6 @@
   { "name": "Emil Sinclair", "work": "Demian", "author": "Hermann Hesse", "image": "/rankings/demian.jpg" },
   { "name": "Ivan Karamazov", "work": "The Brothers Karamazov", "author": "Fyodor Dostoevsky", "image": "/rankings/ivan.png" },
   { "name": "Sensei", "work": "Kokoro", "author": "Natsume Sōseki", "image": "/rankings/sensei.png" },
+  { "name": "Nameless One", "work": "Planescape: Torment", "author": "Chris Avellone", "image": "/rankings/nameless.jpg" },
   { "name": "Yevgeny Bazarov", "work": "Fathers & Sons", "author": "Ivan Turgenev", "image": "/rankings/bazarov.png" }
 ]
