@@ -1,37 +1,45 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+// Posts als Stationen an einem gestrichelten Pfad, nach Jahr gruppiert.
+import { fmtDate, readingTime, type Post } from '../lib/posts';
 
-interface Props {
-  entries: CollectionEntry<'posts'>[];
-  total: number;
+interface Props { entries: Post[] }
+const { entries } = Astro.props;
+
+const years = new Map<number, Post[]>();
+for (const e of entries) {
+  const y = e.data.date.getFullYear();
+  if (!years.has(y)) years.set(y, []);
+  years.get(y)!.push(e);
 }
-
-const { entries, total } = Astro.props;
-
-const fmt = (d: Date) =>
-  d.toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' });
 ---
 
-<ul class="entry-list">
-  {entries.map((e, i) => (
-    <li class="entry">
-      <a href={`/posts/${e.id}`} class={e.data.cover ? 'has-thumb' : undefined}>
-        <span class="entry-num">{String(total - i).padStart(2, '0')}</span>
-        <span class="entry-body">
-          <span class="entry-title">{e.data.title}</span>
-          {e.data.description && <span class="entry-desc">{e.data.description}</span>}
-          <span class="entry-meta">
-            <span>{fmt(e.data.date)}</span>
-            {e.data.work && (<><span class="dot">·</span><span>{e.data.work}</span></>)}
-            {e.data.author && (<><span class="dot">·</span><span>{e.data.author}</span></>)}
-          </span>
-        </span>
-        {e.data.cover && (
-          <span class="entry-thumb">
-            <img src={e.data.cover} alt={e.data.coverAlt ?? ''} loading="lazy" decoding="async" />
-          </span>
-        )}
-      </a>
-    </li>
-  ))}
-</ul>
+{[...years].map(([year, list]) => (
+  <>
+    <div class="year"><span>{year}</span></div>
+    <ul class="trail">
+      {list.map((e) => (
+        <li>
+          <a href={`/posts/${e.id}`}>
+            <span class="date meta">{fmtDate(e.data.date)}</span>
+            <span class="node" aria-hidden="true"><span></span></span>
+            {e.data.cover ? (
+              <span class="polaroid"><img src={e.data.cover} alt="" loading="lazy" decoding="async" /></span>
+            ) : (
+              <span class="polaroid empty" aria-hidden="true"></span>
+            )}
+            <span class="body">
+              <span class="meta">
+                {e.data.work && <span>{e.data.work}</span>}
+                {e.data.author && <span>· {e.data.author}</span>}
+                <span>· {readingTime(e.body)} min read</span>
+                {e.data.unfinished && <span class="tag">unfinished</span>}
+              </span>
+              <span class="title">{e.data.title}</span>
+              {e.data.description && <span class="desc">{e.data.description}</span>}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </>
+))}

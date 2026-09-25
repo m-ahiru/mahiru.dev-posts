@@ -1,50 +1,116 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
+import { getPosts, fmtDate, readingTime, type Post } from '../../lib/posts';
 
 export async function getStaticPaths() {
-  const entries = (await getCollection('posts')).filter((e) => !e.data.draft);
-  return entries.map((entry) => ({
+  const entries = await getPosts();
+  return entries.map((entry, i) => ({
     params: { slug: entry.id },
-    props: { entry },
+    // entries sind neueste zuerst -> i+1 ist der ältere Post
+    props: { entry, older: entries[i + 1] as Post | undefined },
   }));
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
-const { title, date, description, work, author, cover, coverAlt } = entry.data;
+const { entry, older } = Astro.props;
+const { Content, headings } = await render(entry);
+const { title, date, description, work, author, cover, coverAlt, unfinished } = entry.data;
 
-const fmt = (d: Date) =>
-  d.toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' });
+// Verzeichnis: h2 + h3 (das handgeschriebene "Inhalt" ist per Remark-Plugin schon raus)
+const toc = headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug !== 'footnote-label');
 ---
 
-<Base title={`${title} — mahiru`} description={description ?? `Post: ${title}`} image={cover} progress>
-  <article class="wrap">
-    <div class="panel article-panel">
-      <header class="article-head">
-        <a href="/posts" class="back-link"><span aria-hidden="true">&larr;</span> posts</a>
-
-        <div class="article-meta">
-          <span>{fmt(date)}</span>
-          {work && (<><span class="dot">·</span><span>{work}</span></>)}
-          {author && (<><span class="dot">·</span><span>{author}</span></>)}
-        </div>
-
-        <h1 class="article-title">{title}</h1>
-        {description && <p class="article-lede">{description}</p>}
-      </header>
-
+<Base title={`${title} — mahiru`} description={description ?? `Post: ${title}`} image={cover} active="posts" progress petals="calm">
+  <div class="wrap post-wrap">
+    <header class="post-hero">
       {cover && (
-        <figure class="article-cover">
-          <img src={cover} alt={coverAlt ?? ''} loading="eager" decoding="async" />
-        </figure>
+        <span class="polaroid"><img src={cover} alt={coverAlt ?? ''} loading="eager" decoding="async" /></span>
+      )}
+      <div class="text">
+        <a href="/posts" class="back-link"><span aria-hidden="true">←</span> posts</a>
+        <span class="meta" style="font-size:.8rem">
+          {fmtDate(date)}{work && ` · ${work}`}{author && ` · ${author}`}
+        </span>
+        <h1 class="post-title">{title}</h1>
+        {description && <p class="post-lede">{description}</p>}
+        <div class="post-facts">
+          <span class="pill">{readingTime(entry.body)} min read</span>
+          {unfinished && <span class="tag" style="padding:.35rem .8rem;font-size:.72rem">unfinished</span>}
+        </div>
+      </div>
+    </header>
+
+    <div class={`post-layout${toc.length ? '' : ' no-toc'}`}>
+      {toc.length > 0 && (
+        <nav class="toc" aria-label="Inhalt">
+          <span class="eyebrow label">Inhalt</span>
+          <ol>
+            {toc.map((h) => (
+              <li class={h.depth === 3 ? 'sub' : undefined}>
+                <a href={`#${h.slug}`} data-toc={h.slug}>{h.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
       )}
 
-      <hr class="rule" />
-
-      <div class="prose">
-        <Content />
-      </div>
+      <article class="article">
+        <div class="prose" lang="de">
+          <Content />
+        </div>
+      </article>
     </div>
-  </article>
+
+    <section class="more">
+      <div class="section-label"><span class="eyebrow">More posts</span><span class="rule"></span></div>
+      <div class="grid">
+        {older && (
+          <a class="card" href={`/posts/${older.id}`}>
+            {older.data.cover && <span class="polaroid"><img src={older.data.cover} alt="" loading="lazy" decoding="async" /></span>}
+            <span style="display:flex;flex-direction:column;gap:.4rem">
+              <span class="meta">← Previous</span>
+              <span class="card-title">{older.data.title}</span>
+            </span>
+          </a>
+        )}
+        <a class="card all" href="/posts">All posts →</a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Scrollspy: markiert im Verzeichnis den Abschnitt, in dem man gerade liest.
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a[data-toc]')];
+    const targets = links
+      .map((a) => document.getElementById(a.dataset.toc!))
+      .filter((el): el is HTMLElement => !!el);
+
+    if (links.length && targets.length) {
+      let ticking = false;
+      let last = -2;
+      const update = () => {
+        ticking = false;
+        const line = window.innerHeight * 0.3;
+        let current = -1;
+        targets.forEach((el, i) => {
+          if (el.getBoundingClientRect().top <= line) current = i;
+        });
+        if (current === last) return;
+        links.forEach((a, i) => {
+          a.classList.toggle('is-active', i === current);
+          a.classList.toggle('is-read', i < current);
+        });
+        last = current;
+        const active = links[current];
+        const toc = document.querySelector<HTMLElement>('.toc');
+        if (active && toc && toc.scrollHeight > toc.clientHeight) {
+          const r = active.offsetTop - toc.clientHeight / 2;
+          toc.scrollTo({ top: r, behavior: 'smooth' });
+        }
+      };
+      addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
+  </script>
 </Base>

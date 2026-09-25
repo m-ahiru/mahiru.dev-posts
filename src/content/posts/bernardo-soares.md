@@ -1,5 +1,5 @@
 ---
-title: "Bernardo Soares Analyse (Unfinished)"
+title: "Bernardo Soares Analyse"
 date: 2026-08-29
 description: "Bernardo Soares - der passivste Mann der ununterbrochen handelt."
 work: "The Book of Disquiet"
@@ -7,6 +7,7 @@ author: "Fernando Pessoa"
 cover: "/covers/tbod.jpg"
 coverAlt: "Bernardo Soares"
 draft: false
+unfinished: true
 ---
 # Bernardo Soares und Das Buch der Unruhe: eine Analyse
 

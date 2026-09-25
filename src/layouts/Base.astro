@@ -1,32 +1,37 @@
 ---
 import '../styles/global.css';
-import ParticleField from '../components/ParticleField.astro';
+import Backdrop from '../components/Backdrop.astro';
+import Petals from '../components/Petals.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
 import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
   description?: string;
-  /** which nav item is active: 'home' | 'posts' */
+  /** which nav item is active */
   active?: 'home' | 'posts' | 'rankings' | undefined;
   /** show the reading progress bar (post pages) */
   progress?: boolean;
   /** Share-Bild fürs Embed (og:image), z.B. "/covers/xyz.jpg" */
   image?: string;
+  /** Sakura: 'full' (Standard), 'calm' (Lese-Seiten) */
+  petals?: 'full' | 'calm';
+  /** Footer ausblenden (z.B. Rankings-Reise) */
+  footer?: boolean;
 }
 
-const { title, description = 'Posts', active, progress = false, image } = Astro.props;
+const { title, description = 'Posts', active, progress = false, image, petals = 'full', footer = true } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = new URL(image ?? '/og-mahiru.png', Astro.site).toString();
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#b490fc" />
+    <meta name="theme-color" content="#000000" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
@@ -42,15 +47,15 @@ const ogImage = new URL(image ?? '/og-mahiru.png', Astro.site).toString();
     <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
+    <Backdrop />
     {progress && <ReadingProgress />}
-    <ParticleField />
 
     <header class="site-header">
       <div class="wrap">
-        <a class="brand" href="/" aria-label="Startseite">
+        <a class="brand" href="/" aria-label="Home">
           <span class="sigil">~/</span><span>mahiru</span>
         </a>
-        <nav class="nav" aria-label="Hauptnavigation">
+        <nav class="nav" aria-label="Main">
           <a href="/" aria-current={active === 'home' ? 'page' : undefined}>index</a>
           <a href="/posts" aria-current={active === 'posts' ? 'page' : undefined}>posts</a>
           <a href="/rankings" aria-current={active === 'rankings' ? 'page' : undefined}>rankings</a>
@@ -62,6 +67,7 @@ const ogImage = new URL(image ?? '/og-mahiru.png', Astro.site).toString();
       <slot />
     </main>
 
-    <Footer />
+    {footer && <Footer />}
+    <Petals calm={petals === 'calm'} count={petals === 'calm' ? 10 : 18} />
   </body>
 </html>

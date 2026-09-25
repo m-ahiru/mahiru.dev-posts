@@ -1,55 +1,378 @@
 ---
 import Base from '../layouts/Base.astro';
-import RankingEntry from '../components/RankingEntry.astro';
 import characters from '../data/characters.json';
 import media from '../data/media.json';
+
+// ─────────────────────────────────────────────────────────────
+// Countdown-Reise: startet beim letzten Platz, #1 kommt zum Schluss.
+// Die Anzahl ("My top X …") kommt automatisch aus der Länge der JSON.
+// ─────────────────────────────────────────────────────────────
+type Entry = { name: string; work?: string; author?: string; image: string; alt?: string };
+
+const W = 2800;      // Weltbreite der Karte
+const GAP = 820;     // Abstand zwischen zwei Stationen
+const ROTS = [-7, 4, -3, 8, -5, 6, -2, 5, -6, 3, -4, 7, -8];
+
+function buildSet(key: string, label: string, list: Entry[]) {
+  const N = list.length;
+  const H = 700 + N * GAP + 700;
+  const px = (k: number) => (k === N - 1 ? W / 2 : W / 2 + Math.sin(k * 1.15 + 0.4) * 680);
+  const py = (k: number) => 700 + k * GAP + (k === N - 1 ? 120 : 0);
+  // Station k = 0 ist der letzte Platz, k = N-1 ist #1
+  const stops = Array.from({ length: N }, (_, k) => {
+    const rank = N - k;
+    const e = list[rank - 1];
+    return { k, rank, n: String(rank).padStart(2, '0'), x: px(k), y: py(k), rot: ROTS[k % ROTS.length], last: k === N - 1, ...e };
+  });
+  const contours = Array.from({ length: Math.ceil(N / 2) + 2 }, (_, k) => {
+    const x = (k % 2 ? W * 0.2 : W * 0.8) + Math.sin(k * 2.3) * 200;
+    const y = 300 + k * GAP * 2.1;
+    const a = 260 + (k % 3) * 60;
+    return [a, a + 160, a + 340].map((r) => ({ l: x - r, t: y - r, d: 2 * r }));
+  }).flat();
+  return { key, label, N, H, stops, contours, points: stops.map((s) => `${s.x},${s.y}`).join(' ') };
+}
+
+const sets = [
+  buildSet('chars', 'characters', characters as Entry[]),
+  buildSet('media', 'media', media as Entry[]),
+];
 ---
 
-<Base title="rankings — mahiru" active="rankings" description="Rankings" image="/og-rankings.png" progress>
-  <section class="wrap rank-head">
-    <span class="eyebrow">Rankings</span>
-  </section>
+<Base title="rankings — mahiru" active="rankings" description="Rankings" image="/og-rankings.png">
+  <section class="journey" data-journey>
+    <div class="j-stage">
+      {sets.map((set, si) => (
+        <div class="j-set" data-set={set.key} data-n={set.N} data-w={W} data-h={set.H} hidden={si !== 0}>
+          <div class="j-world" style={`width:${W}px;height:${set.H}px`}>
+            {set.contours.map((c) => (
+              <span class="j-ring" style={`left:${c.l}px;top:${c.t}px;width:${c.d}px;height:${c.d}px`}></span>
+            ))}
+            <svg class="j-path" width={W} height={set.H} aria-hidden="true">
+              <polyline points={set.points} class="j-path-base" />
+              <polyline points={set.points} class="j-path-draw" />
+            </svg>
+            <span class="j-pulse" style={`left:${set.stops[set.N - 1].x}px;top:${set.stops[set.N - 1].y - 40}px`}>
+              <span></span><span></span>
+            </span>
+            {set.stops.map((s) => (
+              <div class={`j-node${s.last ? ' is-final' : ''}`} style={`left:${s.x}px;top:${s.y}px`}>
+                <span class="polaroid" style={`transform:rotate(${(s.rot * 0.35).toFixed(1)}deg)`}>
+                  <img src={s.image} alt="" loading="lazy" decoding="async" />
+                </span>
+                <span class="j-node-num">{s.n}</span>
+              </div>
+            ))}
+          </div>
 
-  <section class="wrap">
-    <div class="panel">
-      <h2 class="rank-section-title">My favorite fictional characters.</h2>
-      <div class="rank-list">
-        {characters.map((c, i) => (
-          <RankingEntry num={i + 1} name={c.name} work={c.work} author={c.author} image={c.image} alt={c.alt} />
-        ))}
+          <div class="j-intro">
+            <h1>My top <span>{set.N}</span> favorite {set.label}.</h1>
+          </div>
+
+          {set.stops.map((s) => (
+            <article class={`j-page${s.last ? ' is-final' : ''}`} data-k={s.k} aria-label={`#${s.rank} ${s.name}`}>
+              <div class="j-page-img"><img src={s.image} alt={s.alt ?? s.name} loading="lazy" decoding="async" /></div>
+              <div class="j-page-body">
+                <div class="j-page-top meta">
+                  <span>{s.last ? 'N° 01 · THE FAVORITE' : set.key === 'chars' ? 'CHARACTER' : 'MEDIA'}</span>
+                  <span>{s.n} / {String(set.N).padStart(2, '0')}</span>
+                </div>
+                <span class="j-page-num" aria-hidden="true">{s.n}</span>
+                <div class="j-page-text">
+                  <h2>{s.name}</h2>
+                  <span class="j-line"></span>
+                  {s.work && <span class="j-work">{s.work}</span>}
+                  {s.author && <span class="j-author meta">{s.author}</span>}
+                </div>
+              </div>
+            </article>
+          ))}
+
+          <div class="j-minimap" aria-hidden="true">
+            <div class="j-mm-inner" style={`width:${W}px;height:${set.H}px`}>
+              <svg width={W} height={set.H}><polyline points={set.points} /></svg>
+              {set.stops.map((s) => <span class="j-mm-dot" style={`left:${s.x - 80}px;top:${s.y - 80}px`}></span>)}
+              <span class="j-mm-view"></span>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <div class="j-veil" aria-hidden="true"></div>
+      <div class="j-vignette" aria-hidden="true"></div>
+
+      <div class="j-toggle" role="tablist" aria-label="Category">
+        <span class="j-slider" aria-hidden="true"></span>
+        <button role="tab" aria-selected="true" data-tab="chars">Characters</button>
+        <button role="tab" aria-selected="false" data-tab="media">Media</button>
       </div>
+
+      <div class="j-counter" aria-hidden="true">
+        <span class="j-total meta"></span>
+        <span class="j-bar"><span></span></span>
+        <span class="j-cur"></span>
+      </div>
+
+      <div class="j-hint" aria-hidden="true"><span>SCROLL</span><i></i></div>
     </div>
   </section>
-
-  <section class="wrap">
-    <div class="panel">
-      <h2 class="rank-section-title">My favorite Media.</h2>
-      <div class="rank-list">
-        {media.map((m, i) => (
-          <RankingEntry num={i + 1} name={m.name} author={m.author} image={m.image} alt={m.alt} />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <noscript><style>.rank-entry{opacity:1;transform:none;}</style></noscript>
 
   <script>
-    const els = document.querySelectorAll('.rank-entry');
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!('IntersectionObserver' in window) || reduce) {
-      els.forEach((el) => el.classList.add('is-visible'));
-    } else {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            // beim Reinscrollen einblenden, beim Vorbeiscrollen wieder ausblenden
-            e.target.classList.toggle('is-visible', e.isIntersecting);
-          });
-        },
-        { threshold: 0, rootMargin: '-30% 0px -30% 0px' }
-      );
-      els.forEach((el) => io.observe(el));
+    const root = document.querySelector<HTMLElement>('[data-journey]');
+    if (root) {
+      const stage = root.querySelector<HTMLElement>('.j-stage')!;
+      const veil = root.querySelector<HTMLElement>('.j-veil')!;
+      const hint = root.querySelector<HTMLElement>('.j-hint')!;
+      const curEl = root.querySelector<HTMLElement>('.j-cur')!;
+      const totEl = root.querySelector<HTMLElement>('.j-total')!;
+      const barEl = root.querySelector<HTMLElement>('.j-bar span')!;
+      const tabs = [...root.querySelectorAll<HTMLButtonElement>('.j-toggle button')];
+      const slider = root.querySelector<HTMLElement>('.j-slider')!;
+
+      const INTRO = 0.45, END = 0.45;
+      const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+      const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+      type SetState = {
+        el: HTMLElement; N: number; W: number; H: number;
+        world: HTMLElement; pages: HTMLElement[]; nodes: HTMLElement[]; dots: HTMLElement[];
+        pathDraw: SVGPolylineElement; pts: [number, number][]; seg: number[]; len: number;
+        intro: HTMLElement; mmInner: HTMLElement; mmView: HTMLElement;
+      };
+
+      const sets = new Map<string, SetState>();
+      root.querySelectorAll<HTMLElement>('.j-set').forEach((el) => {
+        const N = +el.dataset.n!, W = +el.dataset.w!, H = +el.dataset.h!;
+        const pathDraw = el.querySelector<SVGPolylineElement>('.j-path-draw')!;
+        const pts = pathDraw.getAttribute('points')!.split(' ').map((p) => p.split(',').map(Number) as [number, number]);
+        const seg = pts.map((p, i) => (i ? Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) : 0));
+        const len = seg.reduce((a, b) => a + b, 0);
+        pathDraw.style.strokeDasharray = `${len}`;
+        sets.set(el.dataset.set!, {
+          el, N, W, H, pathDraw, pts, seg, len,
+          world: el.querySelector('.j-world')!,
+          pages: [...el.querySelectorAll<HTMLElement>('.j-page')],
+          nodes: [...el.querySelectorAll<HTMLElement>('.j-node')],
+          dots: [...el.querySelectorAll<HTMLElement>('.j-mm-dot')],
+          intro: el.querySelector('.j-intro')!,
+          mmInner: el.querySelector('.j-mm-inner')!,
+          mmView: el.querySelector('.j-mm-view')!,
+        });
+      });
+
+      let active = sets.get('chars')!;
+      let step = 900;
+
+      function layout() {
+        const vh = window.innerHeight;
+        step = Math.max(720, vh * 1.05);
+        root!.style.height = `${(active.N - 1 + END + INTRO) * step + vh}px`;
+        totEl.textContent = String(active.N).padStart(2, '0');
+        // Minimap einpassen
+        const mm = active.mmInner.parentElement!;
+        const s = Math.min(mm.clientWidth / active.W, mm.clientHeight / active.H);
+        active.mmInner.style.transform = `translate(${(mm.clientWidth - active.W * s) / 2}px, ${(mm.clientHeight - active.H * s) / 2}px) scale(${s})`;
+        render();
+      }
+
+      function render() {
+        const S = active, N = S.N;
+        const vw = stage.clientWidth, vh = stage.clientHeight;
+        const y = clamp(-root!.getBoundingClientRect().top, 0, root!.offsetHeight);
+        const g = clamp(y / step - INTRO, -INTRO, N - 1 + END);
+
+        const i0 = clamp(Math.floor(g), 0, N - 1), t = g < 0 ? 0 : g - Math.floor(g);
+        const i1 = Math.min(i0 + 1, N - 1);
+        const mv = ease(clamp((t - 0.5) / 0.4, 0, 1));
+        const [x0, y0] = S.pts[i0], [x1, y1] = S.pts[i1];
+        const cx = x0 + (x1 - x0) * mv, cy = y0 + (y1 - y0) * mv;
+
+        const pres = (d: number, last: boolean) => {
+          if (d < -0.2) return 0;
+          if (d < 0) return ease((d + 0.2) / 0.2);
+          if (d <= 0.45 || last) return 1;
+          if (d < 0.7) return 1 - ease((d - 0.45) / 0.25);
+          return 0;
+        };
+
+        const mobile = vw < 760;
+        const PX = vw / 2 - (mobile ? 46 : 110), PY = vh - (mobile ? 70 : 110) - vh / 2;
+        const pileScale = mobile ? 0.2 : 0.14;
+        let veilV = 0;
+
+        S.pages.forEach((el, k) => {
+          const last = k === N - 1, d = g - k;
+          veilV = Math.max(veilV, pres(d, last));
+          let tf: string, op = 1, filt = 'none';
+          if (d < -0.2) { tf = `translateY(${vh}px) rotate(4deg)`; op = 0; }
+          else if (d < 0) { const q = 1 - ease((d + 0.2) / 0.2); tf = `translateY(${(q * vh * 0.92).toFixed(0)}px) rotate(${(q * 4).toFixed(2)}deg)`; }
+          else if (d <= 0.45 || last) { tf = ''; }
+          else {
+            const q = ease(clamp((d - 0.45) / 0.3, 0, 1));
+            const sc = 1 - q * (1 - pileScale), r = [-7, 4, -3, 8, -5, 6, -2, 5, -6, 3, -4, 7, -8][k % 13] * q;
+            tf = `translate(${(PX * q).toFixed(0)}px,${((PY - k * 4) * q).toFixed(0)}px) scale(${sc.toFixed(3)}) rotate(${r.toFixed(1)}deg)`;
+            filt = `brightness(${(1 - q * 0.35).toFixed(2)})`;
+          }
+          el.style.transform = `translate(-50%,-50%) ${tf}`;
+          el.style.opacity = String(op);
+          el.style.filter = filt;
+          const img = el.querySelector<HTMLElement>('.j-page-img img');
+          if (img) img.style.transform = `scale(${(1.08 - clamp(d + 0.2, 0, 0.65) * 0.12).toFixed(3)})`;
+          const num = el.querySelector<HTMLElement>('.j-page-num');
+          if (num) num.style.transform = `translateY(${(clamp(-d, -1, 1) * 90).toFixed(0)}px)`;
+        });
+
+        S.nodes.forEach((el, k) => {
+          const near = clamp(1 - Math.abs(g - k) * 1.6, 0, 1);
+          el.style.opacity = g >= k - 0.2 ? (0.35 + 0.65 * near).toFixed(2) : '0.12';
+          el.style.filter = `grayscale(${(1 - near).toFixed(2)})`;
+          S.dots[k]?.classList.toggle('on', g >= k);
+        });
+
+        // Kamera
+        const base = clamp(Math.min(vw / 1440, vh / 900), 0.42, 1.15);
+        const z = (g < 0 ? 0.55 + 0.2 * (1 + g / INTRO) : 0.72 + 0.38 * veilV) * base;
+        const r = Math.sin(g * 0.9) * 2;
+        S.world.style.transform = `translate(${vw / 2}px,${vh * 0.52}px) rotate(${r.toFixed(2)}deg) scale(${z.toFixed(3)}) translate(${(-cx).toFixed(1)}px,${(-cy).toFixed(1)}px)`;
+
+        let drawn = 0;
+        for (let k = 1; k <= i0; k++) drawn += S.seg[k];
+        if (i1 > i0) drawn += S.seg[i1] * mv;
+        S.pathDraw.style.strokeDashoffset = String(S.len - drawn);
+
+        veil.style.opacity = (veilV * 0.9).toFixed(2);
+        S.intro.classList.toggle('is-gone', g >= -0.15);
+        hint.classList.toggle('is-gone', g >= -0.3);
+
+        const vpW = vw / z, vpH = vh / z;
+        Object.assign(S.mmView.style, { left: `${cx - vpW / 2}px`, top: `${cy - vpH / 2}px`, width: `${vpW}px`, height: `${vpH}px` });
+
+        const cur = g < 0 ? N : N - Math.round(clamp(g, 0, N - 1));
+        curEl.textContent = String(cur).padStart(2, '0');
+        barEl.style.width = `${(((g + INTRO) / (N - 1 + END + INTRO)) * 100).toFixed(1)}%`;
+      }
+
+      function select(key: string) {
+        const next = sets.get(key);
+        if (!next || next === active) return;
+        active.el.hidden = true;
+        next.el.hidden = false;
+        active = next;
+        tabs.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === key)));
+        slider.dataset.pos = key;
+        const top = root!.getBoundingClientRect().top + window.scrollY;
+        layout();
+        window.scrollTo({ top, behavior: 'instant' as ScrollBehavior });
+        render();
+      }
+      tabs.forEach((b) => b.addEventListener('click', () => select(b.dataset.tab!)));
+
+      let ticking = false;
+      addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; render(); }); } }, { passive: true });
+      addEventListener('resize', layout);
+      layout();
+      root.classList.add('is-ready');
     }
   </script>
 </Base>
+
+<style is:global>
+  /* ============ Rankings-Reise ============ */
+  .journey { position: relative; }
+  .j-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+  .j-set[hidden] { display: none; }
+
+  .j-world { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; transition: transform 0.7s var(--ease-out); }
+  .j-ring { position: absolute; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--accent) 7%, transparent); }
+  .j-path { position: absolute; left: 0; top: 0; overflow: visible; }
+  .j-path polyline { fill: none; }
+  .j-path-base { stroke: var(--fg-ghost); stroke-width: 1.5; stroke-dasharray: 3 9; }
+  .j-path-draw { stroke: var(--accent); stroke-width: 2; transition: stroke-dashoffset 0.7s var(--ease-out); }
+
+  .j-pulse { position: absolute; width: 0; height: 0; }
+  .j-pulse span { position: absolute; left: -210px; top: -210px; width: 420px; height: 420px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent); animation: j-pulse 2.4s var(--ease-out) infinite; }
+  .j-pulse span + span { animation-delay: 1.2s; }
+  @keyframes j-pulse { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.8); opacity: 0; } }
+
+  .j-node { position: absolute; width: 240px; margin: -116px 0 0 -120px; display: flex; flex-direction: column; align-items: center; gap: 14px; transition: opacity 0.6s ease, filter 0.6s ease; }
+  .j-node .polaroid { width: 216px; padding: 8px; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8); }
+  .j-node-num { font-family: var(--display); font-weight: 700; font-size: 64px; line-height: 1; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1.2px var(--accent); }
+  .j-node.is-final { width: 340px; margin: -170px 0 0 -170px; }
+  .j-node.is-final .polaroid { width: 316px; }
+  .j-node.is-final .j-node-num { font-size: 120px; }
+
+  .j-veil { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+  .j-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.85) 100%); }
+
+  .j-intro { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 0 var(--page-x); pointer-events: none; transition: opacity 0.5s ease, transform 0.6s var(--ease-out); z-index: 5; }
+  .j-intro h1 { max-width: 1100px; text-align: center; font-family: var(--display); font-style: italic; font-weight: 600; font-size: clamp(2.8rem, 7.5vw, 6.5rem); line-height: 0.98; letter-spacing: -0.035em; text-wrap: balance; }
+  .j-intro h1 span { color: var(--accent); }
+  .j-intro.is-gone { opacity: 0; transform: translateY(-40px); }
+
+  .j-page {
+    position: absolute; left: 50%; top: calc(50% + 20px); z-index: 10;
+    width: min(1060px, 90vw); height: min(540px, 70vh);
+    display: flex; overflow: hidden; background: var(--panel);
+    border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 6px;
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.85);
+    opacity: 0; will-change: transform;
+    transition: transform 0.55s var(--ease-out), opacity 0.4s ease, filter 0.5s ease;
+  }
+  .j-page-img { flex-shrink: 0; height: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: var(--bg-inset); }
+  .j-page-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease-out); }
+  .j-page-body { position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.5rem, 3.5vw, 2.75rem) clamp(1.5rem, 3.5vw, 3rem); }
+  .j-page-top { display: flex; justify-content: space-between; font-size: 0.68rem; letter-spacing: 0.16em; }
+  .j-page-num { position: absolute; right: 1.9rem; top: 4rem; font-family: var(--display); font-weight: 700; font-size: clamp(8rem, 16vw, 13.75rem); line-height: 1; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--accent) 50%, transparent); transition: transform 0.7s var(--ease-out); pointer-events: none; }
+  .j-page-text { position: relative; display: flex; flex-direction: column; gap: 1rem; }
+  .j-page-text h2 { font-family: var(--display); font-style: italic; font-weight: 600; font-size: clamp(2.2rem, 4.5vw, 3.9rem); line-height: 0.98; letter-spacing: -0.025em; text-wrap: balance; }
+  .j-line { display: block; width: 72px; height: 1.5px; background: var(--accent); }
+  .j-work { font-style: italic; font-size: 1.3rem; color: var(--fg-dim); }
+  .j-author { text-transform: uppercase; letter-spacing: 0.08em; }
+  .j-page.is-final { border-color: var(--accent); animation: j-glow 3s ease-in-out infinite; }
+  .j-page.is-final .j-page-top { color: var(--accent); }
+  .j-page.is-final .j-page-num { color: color-mix(in srgb, var(--accent) 18%, transparent); }
+  @keyframes j-glow { 0%, 100% { box-shadow: 0 0 0 1px var(--accent), 0 0 60px color-mix(in srgb, var(--accent) 25%, transparent); } 50% { box-shadow: 0 0 0 1px var(--accent), 0 0 110px color-mix(in srgb, var(--accent) 45%, transparent); } }
+
+  .j-toggle { position: absolute; top: calc(var(--header-h) + 22px); left: var(--page-x); z-index: 30; display: flex; padding: 4px; border: 1px solid var(--line-strong); border-radius: 999px; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .j-toggle button { position: relative; width: 132px; min-height: 44px; border: 0; background: none; cursor: pointer; font-family: var(--body); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim); transition: color 0.35s; }
+  .j-toggle button[aria-selected='true'] { color: #000; }
+  .j-slider { position: absolute; top: 4px; bottom: 4px; left: 4px; width: 132px; border-radius: 999px; background: var(--accent); transition: transform 0.55s var(--ease-out); }
+  .j-slider[data-pos='media'] { transform: translateX(132px); }
+
+  .j-minimap { position: absolute; top: calc(var(--header-h) + 22px); right: var(--page-x); width: 110px; height: 150px; z-index: 30; border: 1px solid var(--line-strong); border-radius: 6px; background: rgba(0, 0, 0, 0.72); overflow: hidden; }
+  .j-mm-inner { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .j-mm-inner svg { position: absolute; inset: 0; }
+  .j-mm-inner polyline { fill: none; stroke: var(--fg-faint); stroke-width: 34; }
+  .j-mm-dot { position: absolute; width: 160px; height: 160px; border-radius: 50%; background: var(--fg-ghost); transition: background 0.5s; }
+  .j-mm-dot.on { background: var(--accent); }
+  .j-mm-view { position: absolute; box-sizing: border-box; border: 18px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); transition: all 0.7s var(--ease-out); }
+
+  .j-counter { position: absolute; left: var(--page-x); bottom: 2.5rem; z-index: 30; display: flex; align-items: center; gap: 1.1rem; }
+  .j-bar { position: relative; width: 180px; height: 1px; background: var(--fg-ghost); }
+  .j-bar span { position: absolute; left: 0; top: 0; height: 1px; width: 0; background: var(--accent); transition: width 0.5s; }
+  .j-cur { font-family: var(--display); font-size: 2.25rem; font-weight: 300; line-height: 1; }
+
+  .j-hint { position: absolute; left: 50%; bottom: 2.25rem; transform: translateX(-50%); z-index: 30; display: flex; flex-direction: column; align-items: center; gap: 10px; transition: opacity 0.5s; pointer-events: none; }
+  .j-hint span { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.3em; color: var(--fg-dim); }
+  .j-hint i { display: block; width: 1px; height: 44px; background: var(--accent); animation: j-hint 1.8s cubic-bezier(0.77, 0, 0.18, 1) infinite; }
+  .j-hint.is-gone { opacity: 0; }
+  @keyframes j-hint { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+  /* Rankings: Footer direkt nach der Reise ohne großen Abstand */
+  body:has(.journey) .site-footer { margin-top: 0; }
+
+  @media (max-width: 760px) {
+    .j-page { flex-direction: column; width: min(360px, 88vw); height: auto; max-height: calc(100svh - 170px); }
+    .j-page-img { width: 100%; height: auto; }
+    .j-page-body { gap: 0.8rem; padding: 1.1rem 1.25rem 1.4rem; }
+    .j-page-num { font-size: 5.5rem; top: 2.2rem; right: 1rem; }
+    .j-page-text { gap: 0.55rem; }
+    .j-page-text h2 { font-size: 1.9rem; }
+    .j-work { font-size: 1.05rem; }
+    .j-minimap { display: none; }
+    .j-toggle button, .j-slider { width: 112px; }
+    .j-slider[data-pos='media'] { transform: translateX(112px); }
+    .j-counter { bottom: 1.4rem; }
+    .j-hint { display: none; }
+  }
+</style>

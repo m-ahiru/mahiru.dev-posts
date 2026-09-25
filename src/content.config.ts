@@ -14,6 +14,8 @@ const posts = defineCollection({
     cover: z.string().optional(),
     coverAlt: z.string().optional(),
     draft: z.boolean().default(false),
+    // true -> "unfinished"-Tag in der Übersicht und im Post
+    unfinished: z.boolean().default(false),
   }),
 });
 

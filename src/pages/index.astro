@@ -1,33 +1,106 @@
 ---
 import Base from '../layouts/Base.astro';
-import EntryList from '../components/EntryList.astro';
-import { getCollection } from 'astro:content';
+import { getPosts, fmtDate, readingTime } from '../lib/posts';
+import characters from '../data/characters.json';
 
-const entries = (await getCollection('posts'))
-  .filter((e) => !e.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const entries = await getPosts();
+const [feature, ...rest] = entries.slice(0, 3);
+const fanCovers = entries.filter((e) => e.data.cover).slice(0, 3);
 
-const latest = entries.slice(0, 3);
+// Teaser: Plätze 5 -> 1, #1 ganz rechts & hervorgehoben
+const teaser = characters.slice(0, 5).reverse();
+const spots = [
+  { l: 0, t: 200, s: 100, r: -6 },
+  { l: 110, t: 40, s: 110, r: 4 },
+  { l: 230, t: 190, s: 120, r: -3 },
+  { l: 350, t: 30, s: 130, r: 5 },
+  { l: 440, t: 160, s: 150, r: -2 },
+];
 ---
 
-<Base title="index - mahiru" active="home" description="Index">
-  <section class="wrap">
-    <div class="panel hero">
+<Base title="mahiru" active="home" description="Posts & rankings">
+  <section class="wrap home-hero">
+    <div>
       <h1 class="hero-name">mahiru<span class="cursor">_</span></h1>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/posts">Posts</a>
+        <a class="btn" href="/rankings">Rankings</a>
+      </div>
     </div>
+    {fanCovers.length > 0 && (
+      <div class="fan" aria-hidden="true">
+        {fanCovers.map((e, i) => (
+          <span class={`polaroid ${['p2', 'p1', 'p3'][i]}`} style={`z-index:${3 - i}`}>
+            <img src={e.data.cover} alt="" decoding="async" />
+          </span>
+        ))}
+      </div>
+    )}
   </section>
 
-  {latest.length > 0 && (
+  {feature && (
     <section class="wrap">
-      <div class="panel">
-        <div class="home-section-label"><span class="eyebrow">Latest</span></div>
-        <EntryList entries={latest} total={entries.length} />
-        <p class="more-link">
-          <a href="/posts" class="back-link" style="flex-direction:row-reverse;">
-            all posts <span aria-hidden="true">&rarr;</span>
-          </a>
-        </p>
+      <div class="section-label">
+        <span class="eyebrow">Latest</span>
+        <span class="rule"></span>
+        <a href="/posts">All posts →</a>
       </div>
+
+      <a class="card feature" href={`/posts/${feature.id}`}>
+        {feature.data.cover && <span class="polaroid"><img src={feature.data.cover} alt="" decoding="async" /></span>}
+        <span class="card-body">
+          <span class="meta">
+            {fmtDate(feature.data.date)}
+            {feature.data.work && ` · ${feature.data.work}`}
+            {feature.data.author && ` · ${feature.data.author}`}
+            {` · ${readingTime(feature.body)} min read`}
+          </span>
+          <span class="card-title">{feature.data.title}</span>
+          {feature.data.description && <span class="card-desc">{feature.data.description}</span>}
+          <span style="display:flex;gap:.75rem;align-items:center">
+            <span class="go">Read <span aria-hidden="true">→</span></span>
+            {feature.data.unfinished && <span class="tag">unfinished</span>}
+          </span>
+        </span>
+      </a>
+
+      {rest.length > 0 && (
+        <div class="card-grid">
+          {rest.map((e) => (
+            <a class="card small" href={`/posts/${e.id}`}>
+              {e.data.cover && <span class="polaroid"><img src={e.data.cover} alt="" loading="lazy" decoding="async" /></span>}
+              <span class="card-body">
+                <span class="meta">{fmtDate(e.data.date)}{e.data.work && ` · ${e.data.work}`}</span>
+                <span class="card-title">{e.data.title}</span>
+                {e.data.description && <span class="card-desc">{e.data.description}</span>}
+                {e.data.unfinished && <span><span class="tag">unfinished</span></span>}
+              </span>
+            </a>
+          ))}
+        </div>
+      )}
     </section>
   )}
+
+  <section class="wrap">
+    <a class="rank-teaser" href="/rankings">
+      <span class="teaser-text">
+        <h2>Rankings<span>.</span></h2>
+        <span class="meta" style="font-size:.8rem;letter-spacing:.1em;text-transform:uppercase">Characters · Media</span>
+        <span class="go">View <span aria-hidden="true">→</span></span>
+      </span>
+      <span class="teaser-stack" aria-hidden="true">
+        <svg width="600" height="380">
+          <polyline points={spots.map((p) => `${p.l + p.s / 2 + 6},${p.t + p.s / 2 + 6}`).join(' ')}
+            fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="3 8" opacity="0.6" />
+        </svg>
+        {teaser.map((c, i) => (
+          <span class={`polaroid${i === teaser.length - 1 ? ' top' : ''}`}
+            style={`left:${spots[i].l}px;top:${spots[i].t}px;transform:rotate(${spots[i].r}deg)`}>
+            <img src={c.image} alt="" loading="lazy" decoding="async" style={`width:${spots[i].s}px;height:${spots[i].s}px`} />
+          </span>
+        ))}
+      </span>
+    </a>
+  </section>
 </Base>

@@ -1,0 +1,35 @@
+---
+// Fallende Sakura-Blätter über allem (pointer-events: none).
+// `count` = Anzahl, `calm` = langsamer & blasser (für Lese-Seiten).
+interface Props { count?: number; calm?: boolean }
+const { count = 18, calm = false } = Astro.props;
+
+// deterministische Pseudo-Zufallswerte -> kein Layout-Flackern zwischen Builds
+const rnd = (i: number, k: number) => Math.abs((Math.sin(i * k) * 43758.5453) % 1);
+const petals = Array.from({ length: count }, (_, i) => {
+  const a = rnd(i + 1, 12.9898), b = rnd(i + 1, 78.233), c = rnd(i + 1, 3.7);
+  const size = (calm ? 8 : 9) + b * (calm ? 10 : 12);
+  const dur = (calm ? 20 : 11) + c * (calm ? 16 : 10);
+  return {
+    left: (a * 100).toFixed(2),
+    dur: dur.toFixed(1),
+    delay: (-(b * dur)).toFixed(1),
+    sway: (3 + a * 3).toFixed(1),
+    spin: (4 + c * 5).toFixed(1),
+    w: size.toFixed(0),
+    h: (size * 0.72).toFixed(0),
+    op: (calm ? 0.35 + a * 0.3 : 0.55 + a * 0.4).toFixed(2),
+    blur: c > 0.8 ? 1.5 : 0,
+  };
+});
+---
+
+<div class="petals" aria-hidden="true">
+  {petals.map((p) => (
+    <span class="petal-x" style={`left:${p.left}%;animation-duration:${p.dur}s;animation-delay:${p.delay}s`}>
+      <span class="petal-y" style={`animation-duration:${p.sway}s;animation-delay:${p.delay}s`}>
+        <span class="petal" style={`width:${p.w}px;height:${p.h}px;opacity:${p.op};filter:blur(${p.blur}px);animation-duration:${p.spin}s`}></span>
+      </span>
+    </span>
+  ))}
+</div>
