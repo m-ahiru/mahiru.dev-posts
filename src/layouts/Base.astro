@@ -22,7 +22,7 @@ interface Props {
 
 const { title, description = 'Posts', active, progress = false, image, petals = 'full', footer = true } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const ogImage = new URL(image ?? '/og-mahiru.png', Astro.site).toString();
+const ogImage = new URL(image ?? '/og-mahiru.png?v=2', Astro.site).toString();
 ---
 
 <!doctype html>
