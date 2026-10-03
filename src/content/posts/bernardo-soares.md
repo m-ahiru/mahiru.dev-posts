@@ -1,5 +1,5 @@
 ---
-title: "Bernardo Soares Analyse (Unfinished)"
+title: "Bernardo Soares und das Pessoa System (Unfinished)"
 date: 2026-08-29
 description: "Bernardo Soares - der passivste Mann der ununterbrochen handelt."
 work: "The Book of Disquiet"
