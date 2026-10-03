@@ -7,6 +7,7 @@ author: "Fernando Pessoa"
 cover: "/covers/tbod.jpg"
 coverAlt: "Bernardo Soares"
 draft: false
+unfinished: true
 ---
 # Bernardo Soares und Das Buch der Unruhe: eine Analyse
 
