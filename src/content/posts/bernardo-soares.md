@@ -160,7 +160,7 @@ Weil er metaphysisch nichts erreichen kann, macht er seine Seele zum Schauspiel,
 
 Sein voller Name lautet Fernando António Nogueira Pessoa. „Pessoa" heißt auf Portugiesisch „Person"; das Wort geht auf das lateinische _persona_ zurück, das ursprünglich die Maske bezeichnet, die Schauspieler im Theater tragen.
 
-<mark>Der Mann heißt also mit Nachnamen „Maske" und verbringt sein Leben damit, Masken zu erfinden.</mark> Das weiß er natürlich und spielt damit. Sein Ausdruck für das ganze Projekt, _drama em gente_, also ein Drama in Personen, benutzt genau dieses Wort.
+<mark>Der Mann heißt also mit Nachnamen „Maske" und verbringt sein Leben damit, Masken zu erfinden.</mark> Das weiß er natürlich und spielt damit. Sein Ausdruck für das ganze Projekt, _drama em gente_, also ein Drama in Personen, spielt genau mit diesem Begriff.
 
 ### Die erfüllten Wünsche
 
@@ -173,6 +173,8 @@ Das Buch, dessen Thema lautet: „Ständig fühle ich, daß ich ein anderer war"
 ### Die Parallele zu Amiel
 
 Henri-Frédéric Amiel ist Philosophieprofessor in Genf und führt sein Leben lang ein Tagebuch, das am Ende rund 17.000 Seiten umfasst. Es enthält fast keine Ereignisse, sondern beinahe ausschließlich Selbstbeobachtung: Stimmungen, Gedanken über das eigene Denken, das Protokoll eines Innenlebens, dem äußerlich nichts zustößt. Zu Lebzeiten veröffentlicht Amiel davon nichts. Nach seinem Tod 1881 gibt sein Freund, der Kritiker Edmond Scherer, eine Auswahl heraus und schreibt die Einleitung dazu. Erst dadurch wird aus einem privaten Papierberg ein Buch, und zwar eines, das Amiel in dieser Form nie geplant hat.
+
+Das liest sich wie eine Beschreibung des Buchs der Unruhe. <mark>Auch Soares führt ein Tagebuch ohne Ereignisse, das Protokoll eines Innenlebens, dem äußerlich nichts zustößt</mark>, geschrieben von einem Mann, der sich beim Denken selbst zusieht. Beide Bücher sind das, was entsteht, wenn jemand ein Leben lang in den Spiegel sieht.
 
 Pessoa kennt dieses Buch, und Soares erwähnt Amiel im Buch der Unruhe. <mark>Pessoas eigenes Werk endet dann auf exakt dieselbe Weise</mark>: als Truhe voller ungeordneter Blätter, aus der erst andere ein Buch machen.
 
