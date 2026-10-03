@@ -1,5 +1,5 @@
 ---
-title: "Bernardo Soares und das Pessoa System (Unfinished)"
+title: "Bernardo Soares Analyse (Unfinished)"
 date: 2026-08-29
 description: "Bernardo Soares - der passivste Mann der ununterbrochen handelt."
 work: "The Book of Disquiet"
@@ -31,6 +31,7 @@ draft: false
   - [Das unmögliche Ziel schlechthin](#das-unmögliche-ziel-schlechthin)
   - [Zielen, nicht Ziel](#zielen-nicht-ziel)
 - [Meta-Parallelen: Pessoas Leben und Werk](#meta-parallelen-pessoas-leben-und-werk)
+  - [Der Name als Maske](#der-name-als-maske)
   - [Die erfüllten Wünsche](#die-erfüllten-wünsche)
   - [Der Autorwechsel des Manuskripts](#der-autorwechsel-des-manuskripts)
   - [Die Parallele zu Amiel](#die-parallele-zu-amiel)
@@ -154,6 +155,12 @@ Selbst das Verstummen-Wollen kommt bei ihm nur als Wille heraus, der sich rekurs
 Weil er metaphysisch nichts erreichen kann, macht er seine Seele zum Schauspiel, und ist genau darin <mark>kein Mann der Tat, aber sehr wohl ein Handelnder: einer, der pausenlos will und dessen einziges Werk darin besteht, jedes vollendbare Werk zu verweigern</mark>.
 
 ## Meta-Parallelen: Pessoas Leben und Werk
+
+### Der Name als Maske
+
+Sein voller Name lautet Fernando António Nogueira Pessoa. „Pessoa" heißt auf Portugiesisch „Person"; das Wort geht auf das lateinische _persona_ zurück, das ursprünglich die Maske bezeichnet, die Schauspieler im Theater tragen.
+
+<mark>Der Mann heißt also mit Nachnamen „Maske" und verbringt sein Leben damit, Masken zu erfinden.</mark> Das weiß er natürlich und spielt damit. Sein Ausdruck für das ganze Projekt, _drama em gente_, also ein Drama in Personen, benutzt genau dieses Wort.
 
 ### Die erfüllten Wünsche
 
