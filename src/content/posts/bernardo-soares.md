@@ -1,5 +1,5 @@
 ---
-title: "Bernardo Soares und das Pessoa System (Unfinished)"
+title: "Bernardo Soares und das Pessoa-System"
 date: 2026-08-29
 description: "Bernardo Soares - der passivste Mann der ununterbrochen handelt."
 work: "The Book of Disquiet"
@@ -7,11 +7,12 @@ author: "Fernando Pessoa"
 cover: "/covers/tbod.jpg"
 coverAlt: "Bernardo Soares"
 draft: false
-unfinished: true
 ---
 # Bernardo Soares und Das Buch der Unruhe: eine Analyse
 
 >Alles verflüchtigt sich mir. Mein ganzes Leben, meine Erinnerungen, meine Phantasie und was sie enthält, meine Persönlichkeit, alles verflüchtigt sich mir. Ständig fühle ich, daß ich ein anderer war, daß ich als anderer fühlte, daß ich als anderer dachte. Ich sehe ein Schauspiel mit einem nicht dazugehörigen Bühnenbild. Und was ich da sehe, das bin ich.
+>
+> *(Fragment 213)*
 
 ## Inhalt
 
@@ -29,6 +30,7 @@ unfinished: true
 - [Das Fragment als Spiegel seiner Person](#das-fragment-als-spiegel-seiner-person)
 - [Der Wille und das Ziel der Nicht-Existenz](#der-wille-und-das-ziel-der-nicht-existenz)
   - [Schopenhauers Willensfalle](#schopenhauers-willensfalle)
+  - [Die andere Seite des Pendels: der Überdruss](#die-andere-seite-des-pendels-der-überdruss)
   - [Das unmögliche Ziel schlechthin](#das-unmögliche-ziel-schlechthin)
   - [Zielen, nicht Ziel](#zielen-nicht-ziel)
 - [Meta-Parallelen: Pessoas Leben und Werk](#meta-parallelen-pessoas-leben-und-werk)
@@ -45,6 +47,8 @@ Soares ist zu sensibel zum wirklichen Handeln; bei ihm verschwimmt die Grenze zw
 
 Warum handelt er nicht? Weil ihn das Handeln in seinen Augen immer enttäuscht, denn <mark>die Vorstellung ist stets besser als das Erleben</mark>. Er sagt, sich eine Reise vorzustellen sei immer schöner, als die Reise wirklich zu erleben; Blumen seien in der Vorstellung immer bunter und heller als in Wirklichkeit. Deshalb handelt er nicht, kann und will es auch gar nicht, weil er weiß, dass er ohnehin enttäuscht würde.
 
+Dieses Prinzip hat einen Preis. Wenn die Vorstellung stets besser ist als das Erleben, ist die Wirklichkeit schon langweilig, bevor sie geschieht. <mark>Soares langweilt sich an der Welt, weil er sie im Traum schon schöner hatte.</mark> Dieser Preis ist der Überdruss, auf den später noch genauer eingegangen wird.
+
 Das Schreiben dagegen kann ihn nicht enttäuschen, weil er es nicht um eines Ergebnisses willen tut, sondern einfach, um der Leere zu entkommen. <mark>Auch die Prosa ist für ihn eine Form des Träumens:</mark> Er nennt sie das Erschaffen eines Universums oder eines Traums, das sich mit anderen teilen lässt. So lebt er das Leben anderer in seinen Träumen und erschafft Figuren, Landschaften, Freunde, Ichs.
 
 ## Die ständige Selbstbeobachtung
@@ -56,6 +60,38 @@ Das Schreiben dagegen kann ihn nicht enttäuschen, weil er es nicht um eines Erg
 > Nur im Wasser der Flüsse und Seen konnte er sein Gesicht betrachten. Und die Haltung, die er dabei einnehmen mußte, war symbolisch. Er mußte sich bücken, beugen, um die Schande zu begehen, sich zu sehen.
 >
 > Der Schöpfer des Spiegels hat die menschliche Seele vergiftet.
+>
+> *(Fragment 466)*
+
+Der Blick nach innen spaltet ihn auf, und zwar nicht bloß in einen, der zusieht, und einen, dem zugesehen wird. Auch der Zuschauer selbst ist vielfach: Soares weiß nicht einmal, mit welchem seiner Blicke er gerade sieht. Seine eigenen Empfindungen werden ihm dabei fremd und ziehen an ihm vorbei wie Dinge der Außenwelt.
+
+> Ich beobachte mich, bin mein eigener Zuschauer. Meine Empfindungen ziehen wie äußere Dinge vor ich weiß nicht welchem meiner Blicke vorüber.
+>
+> *(Fragment 182)*
+
+Ein Zuschauer aber verlangt nach einem Stück. <mark>Darum muss Soares träumen: Wer nur noch Beobachter seiner selbst ist, muss sich etwas bieten, das sich zu beobachten lohnt.</mark>
+
+> Ich sehe mich in gewisser Weise verpflichtet, immerfort zu träumen, denn da ich nicht mehr bin noch mehr sein will als ein Beobachter meiner selbst, bin ich mir die bestmögliche Inszenierung schuldig.
+>
+> *(Fragment 221)*
+
+Doch auch der Traum entkommt dem Spiegel nicht. Einst konnte der Mensch sein Gesicht nur im Wasser der Flüsse und Seen betrachten; Soares erträumt sich diesen See selbst:
+
+> Ich sehe mich, wie ich den See sehe, den ich mir vorgestellt habe, und in diesem See sehe ich mich.
+>
+> *(Fragment 339)*
+
+<mark>Der Traum, in den er vor der Wirklichkeit flieht, wird selbst zum Spiegel.</mark> Wohin er auch blickt, findet er nur sich, und so wird er sich selbst überdrüssig:
+
+> Ich bin mir meiner in allem überdrüssig.
+>
+> *(Fragment 182)*
+
+Genau darin sieht er den Kern des Überdrusses:
+
+> Ach, aber das, genau das ist der Überdruß. In alledem – Himmel, Erde, Welt –, in alledem bin ich!
+>
+> *(Fragment 381)*
 
 ## Beruf und Wohnung: die Parallele von Leben und Kunst
 
@@ -64,18 +100,32 @@ Soares lebt nicht sein eigenes Leben, sondern träumt und schreibt von anderen L
 Sein Beruf steht dabei für das „Leben", weil er dort träumt und Material sammelt, seine Wohnung für die „Kunst", weil er dort das Material aufschreibt. Diese Parallele zwischen Leben und Kunst kehrt im Buch immer wieder. Beruf (das Leben) und Wohnung (die Kunst) liegen an derselben Straße: Sie gehören zusammen und sind doch getrennt, und beide zusammen bilden sein gesamtes Universum.
 
 > Und wenn das Büro in der Rua dos Douradores für mich das Leben verkörpert, so verkörpert mein zweites Stockwerk, in dem ich in eben dieser Rua dos Douradores wohne, für mich die Kunst. Jawohl, die Kunst, die in derselben Straße wohnt wie das Leben, jedoch an einem anderen Ort, die Kunst, die das Leben erleichtert, ohne daß es deshalb leichter würde zu leben, die so eintönig ist wie das Leben selbst, nur an einem anderen Ort. Jawohl, diese Rua dos Douradores umfaßt für mich den gesamten Sinn der Dinge, die Lösung aller Rätsel, abgesehen davon, daß manche Rätsel unlösbar sind.
+>
+> *(Fragment 9)*
 
 Dieselbe Harmonie zeigt sich im Verhältnis von Natürlichem und Künstlichem:
 
-> Die Schönheit eines nackten Körpers wissen nur Kulturen zu würdigen, in denen man Kleider trägt. Scham wirkt auf die Sinnlichkeiten wie ein Widerstand auf die Energie. Die Künstlichkeit verhilft zum Genuß der Natürlichkeit. Was ich genossen habe an diesen weiten Gefilden, habe ich genossen, weil ich nicht hier lebe. Die Freiheit spürt nicht, wer nie unter Zwang gelebt hat. Die Zivilisation erzieht uns für die Natur. Das Künstliche ist der Weg zur Würdigung des Natürlichen.
+> Die Schönheit eines nackten Körpers wissen nur Kulturen zu würdigen, in denen man Kleider trägt. Scham wirkt auf die Sinnlichkeit wie ein Widerstand auf die Energie. Die Künstlichkeit verhilft zum Genuß der Natürlichkeit. Was ich genossen habe an diesen weiten Gefilden, habe ich genossen, weil ich nicht hier lebe. Die Freiheit spürt nicht, wer nie unter Zwang gelebt hat. Die Zivilisation erzieht uns für die Natur. Das Künstliche ist der Weg zur Würdigung des Natürlichen.
+>
+> *(Fragment 50)*
 
 > In der Harmonie zwischen dem Natürlichen und dem Künstlichen besteht die Natürlichkeit der höhergearteten menschlichen Seele.
+>
+> *(Fragment 50)*
 
 Übertragen heißt das: Aus der Harmonie zwischen der Arbeit (Natur, Traum, Leben) und der Wohnung (Kunst, Schreiben) besteht seine ganze Welt.
+
+Die Selbstbeobachtung wird dabei selbst zur Kunst. Sie ersetzt das Fühlen nicht, sondern erzeugt ein neues, das nur dem künstlich erscheint, der es nicht kennt:
+
+> Die beständige Analyse unserer Empfindungen erzeugt eine neue Art des Fühlens, die dem als künstlich erscheint, der nur mit dem Verstand analysiert und nicht mit der Empfindung.
+>
+> *(Fragment 135)*
 
 Ein Satz aus dem Zitat macht das Prinzip vom Traum über der Realität noch deutlicher:
 
 > Was ich genossen habe an diesen weiten Gefilden, habe ich genossen, weil ich nicht hier lebe.
+>
+> *(Fragment 50)*
 
 <mark>Der Genuss entsteht also durch Distanz und Fühlen, nicht durch Teilnahme.</mark> Das Schreiben ist der Weg, auf dem er das Leben würdigen kann: Er lebt nicht direkt, sondern greift durch die Kunst des Schreibens auf das Leben zu.
 
@@ -136,12 +186,40 @@ Soares gilt als der Nicht-Handelnde schlechthin: ein Hilfsbuchhalter, der das Mi
 Der Ausgangspunkt ist die Schopenhauer'sche Tretmühle: Der Wille ist Mangel, und das „Bekommen" zerstört gerade das eigentliche _Es-haben-Wollen_. Erfüllung tötet den Wunsch, der sie trug, und gebiert sofort den nächsten. Schopenhauers Ausweg wäre, den Willen ganz stillzulegen, also Askese, Quietismus. _Das_ wäre der echte Nicht-Handelnde.
 
 > Sollte ich eines Tages das Kreuz meiner Absichten auf den Kalvarienberg tragen können, werde ich einen Kalvarienberg auf dem Kalvarienberg vorfinden und Sehnsucht verspüren nach der Zeit, als er für mich noch nichtig, müßig und unerreichbar war. Ich werde in gewisser Weise weniger sein.
+>
+> *(Fragment 180)*
 
-Soares nimmt den anderen Ausgang. Er schaltet den Willen nicht ab, er richtet ihn auf ein _unmögliches_ Objekt. Ein Ziel, das man nie erreicht, kann man ewig wollen, und Erreichen wäre bei ihm ohnehin Reduktion. Das ist dasselbe Prinzip wie zuvor beim Traum über der Realität, nur auf den Willen selbst gewendet: Wie die vorgestellte Reise das wirkliche Erleben schlägt, so schlägt das unerreichte Ziel jedes erreichte. Die Kalvarienberg-Stelle sagt es wörtlich: Ankommen hieße, „in gewisser Weise weniger sein". Er wählt also das eine Ziel, dessen Nicht-Erreichbarkeit es unendlich hält.
+Soares nimmt den anderen Ausgang. Er schaltet den Willen nicht ab, er richtet ihn auf ein _unmögliches_ Objekt. Ein Ziel, das man nie erreicht, kann man ewig wollen, und Erreichen wäre bei ihm ohnehin Reduktion. Das ist dasselbe Prinzip wie zuvor beim Traum über der Realität, nur auf den Willen selbst gewendet: Wie die vorgestellte Reise das wirkliche Erleben schlägt, so schlägt das unerreichte Ziel jedes erreichte. Die Kalvarienberg-Stelle sagt es wörtlich: Ankommen hieße, „in gewisser Weise weniger sein" (Fragment 180). Er wählt also das eine Ziel, dessen Nicht-Erreichbarkeit es unendlich hält.
 
-> Wir sollten stehts das Unmögliche suchen, denn dies ist unser Geschick; wir sollten es mit Hilfe des Unnützen suchen, denn kein Weg führt daran vorbei; wir sollten uns zu dem Bewußtsein aufschwingen, daß wir nichts suchen, was wir finden könnten, und daß nichts auf unserem Weg eine Zärtlichkeit oder wehmütige Erinnerung verdient.
+> Wir sollten stets das Unmögliche suchen, denn dies ist unser Geschick; wir sollten es mit Hilfe des Unnützen suchen, denn kein Weg führt daran vorbei; wir sollten uns zu dem Bewußtsein aufschwingen, daß wir nichts suchen, was wir finden könnten, und daß nichts auf unserem Weg eine Zärtlichkeit oder wehmütige Erinnerung verdient.
+>
+> *(Fragment 238)*
 
 Das ist kein Verzicht aufs Wollen, sondern Wollen als reine Form, entleert von erreichbarem Inhalt. Der Wille lernt, sich von der eigenen Frustration zu nähren, statt an Befriedigung einzugehen.
+
+### Die andere Seite des Pendels: der Überdruss
+
+Bei Schopenhauer schwingt das Leben wie ein Pendel zwischen Schmerz und Langeweile: Der Mangel quält, die Erfüllung langweilt. Soares kennt die zweite Seite, ohne je bei einer Erfüllung angekommen zu sein. Sein Grundgefühl ist der Überdruss, der Preis für den Traum über der Realität. <mark>Der Traum nimmt jedes Erlebnis vorweg, und so ist Soares satt von Dingen, die er nie hatte.</mark>
+
+Dabei grenzt er den Überdruss scharf von bloßer Langeweile ab:
+
+> Was uns gähnen macht, ist Langeweile; was uns zappelig werden läßt, ist Unbehagen; was uns den Elan nimmt, ist Ermüdung – nichts von alledem ist Überdruß
+>
+> *(Fragment 381)*
+
+Der Überdruss reicht aber weiter, als das Prinzip allein erklärt. Er macht nicht an der Wirklichkeit halt, sondern erfasst auch die Welten, in die Soares flieht:
+
+> Doch mehr noch als all dies ist Überdruß auch eine Langeweile an anderen Welten, gleich, ob sie existieren oder nicht; ein Unbehagen, leben zu müssen, wenn auch als Anderer, auf andere Weise und in einer anderen Welt; ein Müdesein nicht nur des Gestern und des Heute, sondern auch des Morgen und der Ewigkeit, sofern es sie denn gibt, und des Nichts, sofern es denn die Ewigkeit ist.
+>
+> *(Fragment 381)*
+
+<mark>Damit ist selbst der Traum, das Leben als ein Anderer, kein sicherer Ort mehr.</mark> Wer unter Fesseln leidet, hat wenigstens etwas, woran er sich reiben kann. Der Überdrüssige hat nicht einmal das:
+
+> Wer jedoch am Überdruß leidet, fühlt sich gefangen in der wertlosen Freiheit einer unendlichen Zelle. […] Doch die Mauern der unendlichen Zelle können uns nicht begraben, da sie nicht existieren, und ebensowenig können wir durch den Schmerz der Fesseln aufleben, denn niemand hat sie uns angelegt.
+>
+> *(Fragment 381)*
+
+Ohne Mangel gibt es keinen Willen, und ohne Willen kein Leben. Das unmögliche Ziel ist deshalb auch eine Antwort auf den Überdruss: <mark>Soares legt sich selbst die Fessel an, die ihm niemand angelegt hat.</mark> Ein Ziel, das nie erreicht wird, erzeugt einen Mangel, der nie endet, und hält ihn so auf der Seite des Schmerzes, weg vom Überdruss.
 
 ### Das unmögliche Ziel schlechthin
 
@@ -151,7 +229,7 @@ Selbst das Verstummen-Wollen kommt bei ihm nur als Wille heraus, der sich rekurs
 
 ### Zielen, nicht Ziel
 
-<mark>Wer ihn für einen Nicht-Handelnden hält, verwechselt das _Ziel_ mit dem _Zielen_.</mark> Der Stillstand, das Nicht-Sein, die Bühne, das ist bloß das Objekt. Das Verfolgen ist Tun. Sogar die scheinbar passivste Szene fällt auf diese Seite: „ich durchblättere inwendig ein Buch und entwickle eine nie zu Ende gedachte Idee." Bilder ziehen vorüber, aber _entwickeln_ ist Produktion, und _nie zu Ende_ ist wieder das unmögliche Objekt.
+<mark>Wer ihn für einen Nicht-Handelnden hält, verwechselt das _Ziel_ mit dem _Zielen_.</mark> Der Stillstand, das Nicht-Sein, die Bühne, das ist bloß das Objekt. Das Verfolgen ist Tun. Sogar die scheinbar passivste Szene fällt auf diese Seite: „Ich laufe und durchblättere inwendig, ohne zu lesen, ein Buch, dessen Text gespickt ist mit flüchtigen Bildern, und entwickle aus ihnen gemächlich eine nie zu Ende gedachte Idee" (Fragment 181). Bilder ziehen vorüber, aber _entwickeln_ ist Produktion, und _nie zu Ende_ ist wieder das unmögliche Objekt.
 
 Weil er metaphysisch nichts erreichen kann, macht er seine Seele zum Schauspiel, und ist genau darin <mark>kein Mann der Tat, aber sehr wohl ein Handelnder: einer, der pausenlos will und dessen einziges Werk darin besteht, jedes vollendbare Werk zu verweigern</mark>.
 
@@ -169,7 +247,7 @@ Sein voller Name lautet Fernando António Nogueira Pessoa. „Pessoa" heißt auf
 
 ### Der Autorwechsel des Manuskripts
 
-Das Buch, dessen Thema lautet: „Ständig fühle ich, daß ich ein anderer war", wechselt im Lauf seiner Entstehung tatsächlich den Autor, von Vicente Guedes zu Bernardo Soares. <mark>Der Satz ist dem Manuskript selbst passiert.</mark>
+Das Buch, dessen Thema lautet: „Ständig fühle ich, daß ich ein anderer war" (Fragment 213), wechselt im Lauf seiner Entstehung tatsächlich den Autor, von Vicente Guedes zu Bernardo Soares. <mark>Der Satz ist dem Manuskript selbst passiert.</mark>
 
 ### Die Parallele zu Amiel
 
