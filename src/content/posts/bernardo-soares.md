@@ -23,8 +23,8 @@ draft: false
 - [Pessoas Figurensystem](#pessoas-figurensystem)
   - [Drei Ebenen: Mensch, Orthonym, Heteronyme](#drei-ebenen-mensch-orthonym-heteronyme)
   - [Das Orthonym als Figur](#das-orthonym-als-figur)
-  - [Caeiro, Reis und Campos](#caeiro-reis-und-campos)
   - [Soares als Halbheteronym](#soares-als-halbheteronym)
+  - [Caeiro, Reis und Campos](#caeiro-reis-und-campos)
   - [Die Hierarchie: Kunst über Leben](#die-hierarchie-kunst-über-leben)
 - [Warum Soares nicht in den Tod geht](#warum-soares-nicht-in-den-tod-geht)
 - [Das Fragment als Spiegel seiner Person](#das-fragment-als-spiegel-seiner-person)
@@ -37,6 +37,7 @@ draft: false
   - [Der Name als Maske](#der-name-als-maske)
   - [Die erfüllten Wünsche](#die-erfüllten-wünsche)
   - [Der Autorwechsel des Manuskripts](#der-autorwechsel-des-manuskripts)
+  - [Soares X Guedes](#soares-x-guedes)
   - [Die Parallele zu Amiel](#die-parallele-zu-amiel)
 
 ## Handeln, Träumen und die Leere
@@ -97,6 +98,14 @@ Genau darin sieht er den Kern des Überdrusses:
 
 Soares lebt nicht sein eigenes Leben, sondern träumt und schreibt von anderen Leben, und sein Beruf als Hilfsbuchhalter spiegelt genau das wider: Er verbucht Transaktionen, die andere tätigen, so wie er Leben aufzeichnet, die er nicht selbst lebt. In beiden Fällen ist seine Tätigkeit das Schreiben, nicht das aktive Teilnehmen; das eigentliche Arbeiten überlässt er seinem aktiven Ich.
 
+Diese Parallele gilt dabei nicht nur für ihn. Soares macht aus seinem Beruf selbst eine Bestimmung aller Träumer:
+
+> Wir alle, die wir träumen und denken, sind Hilfsbuchhalter in einem Stoffgeschäft oder in irgendeinem anderen Geschäft in irgendeiner Unterstadt. Wir führen Buch und erleiden Verluste; wir zählen zusammen und gehen weiter; wir ziehen Bilanz, und der unsichtbare Saldo spricht immer gegen uns.
+>
+> *(Fragment 419)*
+
+Jeder, der träumt, hat ein „Kassenbuch" vor sich, eine Wirklichkeit, die ihn festhält, sei es die Ehe oder eine geerbte Zukunft. <mark>Der Saldo spricht immer gegen ihn, weil die Wirklichkeit, gemessen am Traum, stets ein Verlust ist.</mark>
+
 Sein Beruf steht dabei für das „Leben", weil er dort träumt und Material sammelt, seine Wohnung für die „Kunst", weil er dort das Material aufschreibt. Diese Parallele zwischen Leben und Kunst kehrt im Buch immer wieder. Beruf (das Leben) und Wohnung (die Kunst) liegen an derselben Straße: Sie gehören zusammen und sind doch getrennt, und beide zusammen bilden sein gesamtes Universum.
 
 > Und wenn das Büro in der Rua dos Douradores für mich das Leben verkörpert, so verkörpert mein zweites Stockwerk, in dem ich in eben dieser Rua dos Douradores wohne, für mich die Kunst. Jawohl, die Kunst, die in derselben Straße wohnt wie das Leben, jedoch an einem anderen Ort, die Kunst, die das Leben erleichtert, ohne daß es deshalb leichter würde zu leben, die so eintönig ist wie das Leben selbst, nur an einem anderen Ort. Jawohl, diese Rua dos Douradores umfaßt für mich den gesamten Sinn der Dinge, die Lösung aller Rätsel, abgesehen davon, daß manche Rätsel unlösbar sind.
@@ -145,13 +154,25 @@ Dass die zweite Ebene wirklich eine Figur ist, zeigt sich daran, dass Álvaro de
 
 Dazu kommt sein bekanntestes Gedicht, *Autopsicografia*, unterschrieben mit „Fernando Pessoa". Darin heißt es, der Dichter sei ein Vortäuscher, der so gründlich vortäuscht, dass er sogar den Schmerz vortäuscht, den er wirklich hat. Es ist die Unterschrift, die erklärt, dass sie selbst eine Täuschung ist.
 
+<mark>Es gibt in diesem System keine Instanz, die nicht selbst eine Figur ist.</mark>
+
+### Soares als Halbheteronym
+
+Soares ist das Sonderstück im System: das einzige, das keinen eigenen Kosmos bekommt, sondern nur ein Büro und eine Wohnung in derselben Straße. Er ist kein volles Heteronym, sondern ein Halbheteronym. Pessoa bestimmt ihn als eine Persönlichkeit, die nicht seine eigene sei, sondern eine bloße Verstümmelung davon. <mark>Soares ist also kein eigener Charakter neben Pessoa, sondern Pessoa selbst, um die Persönlichkeit gekürzt und auf die bloße Lebensform reduziert.</mark> Was über Soares gesagt wird, gilt deshalb in weiten Teilen auch über Pessoa: das Büro, die Einsamkeit, das Schreiben anstelle des Lebens, das Fragment anstelle des Werks.
+
+Der Spiegel steht dabei nur in eine Richtung offen. Soares' Lebensform und sein Verfahren lassen sich auf Pessoa übertragen, weil sie von ihm stammen. Umgekehrt gilt das nicht, denn Soares besitzt von Pessoas Leben nur den Umriss und nichts von dessen Person.
+
+Daraus ergibt sich seine Stellung im System. Soares' Methode ist dieselbe, mit der Pessoa die Heteronyme hervorbringt: andere Leben im Traum leben, Figuren, Landschaften, Freunde und Ichs erschaffen. <mark>Soares ist die Figur, in der dieses Verfahren sich selbst beschreibt.</mark> Das Buch der Unruhe ist damit die Darstellung eines Verfahrens, verfasst von einem seiner Erzeugnisse.
+
 ### Caeiro, Reis und Campos
 
-Alberto Caeiro, „der Meister", ist ein Hirte auf dem Land: ungebildet und radikal anti-metaphysisch. Er erkennt nur an, was er sieht, ohne jeden Gedanken dahinter. Er hat Schüler, die er über das „Leben" unterrichtet, und ist damit das komplette Gegenteil von Soares, dem „Künstler". Auch hier erscheint die Parallele von Leben und Kunst erneut, denn das Leben findet nur innerhalb der Kunst statt, also in Soares' Träumen und Werken.
+Was dieses Verfahren hervorbringt, sind die Heteronyme. <mark>Pessoa erträumt sie, so wie Soares seine Figuren erträumt</mark>, und drei von ihnen bilden den Kern des Systems.
 
-Ricardo Reis: Arzt und Monarchist, kühl, diszipliniert und kontrolliert. Schüler von Caeiro.
+Alberto Caeiro, „der Meister", ist ein Hirte auf dem Land: ungebildet und radikal anti-metaphysisch. Er erkennt nur an, was er sieht, ohne jeden Gedanken dahinter. Er hat Schüler, die er über das „Leben" unterrichtet, und ist damit das Gegenstück zu Soares, dem „Künstler". Auch hier erscheint die Parallele von Leben und Kunst erneut, denn das Leben findet nur innerhalb der Kunst statt, also in Pessoas Träumen und Werken.
 
-Álvaro de Campos: Schiffsingenieur und Modernist, erschöpft und nihilistisch, der emotionalste von allen. Ebenfalls Schüler von Caeiro.
+Ricardo Reis: Arzt und Monarchist, kühl, diszipliniert und kontrolliert. Schüler von Caeiro. Er zieht sich aus dem Geschehen zurück und betrachtet es aus der Distanz.
+
+Álvaro de Campos: Schiffsingenieur und Modernist, erschöpft und nihilistisch, der emotionalste von allen. Ebenfalls Schüler von Caeiro. Er stürzt sich ins Geschehen und wird von ihm überwältigt.
 
 Die Zuordnung:
 
@@ -159,15 +180,11 @@ Die Zuordnung:
 - Álvaro de Campos = das Gefühl
 - Ricardo Reis = der Verstand
 
-### Soares als Halbheteronym
-
-Soares ist das Sonderstück im System: das einzige, das keinen eigenen Kosmos bekommt, sondern nur ein Büro und eine Wohnung in derselben Straße. Er ist kein volles Heteronym, sondern ein Halbheteronym. <mark>Er spiegelt das Leben des Menschen Pessoa wider, jedoch ohne dessen Handlung, Gefühl und Persönlichkeit.</mark> Das heißt: Er ist der „Autor", der in den Träumen anderer lebt, aber er ist nicht Pessoa selbst.
-
 ### Die Hierarchie: Kunst über Leben
 
-Caeiro als „das Leben" ist der Meister, Campos und Reis sind seine Schüler. Gefühl und Verstand sind damit Teil des Lebens und ihm untergeordnet, und sie streiten miteinander; zugleich steht Campos für den Traum und Reis für die Handlung. Über dem „Leben" wiederum steht die Kunst, und so kehrt erneut dasselbe System wieder: <mark>Die Kunst steht über dem Leben, der Traum über der Realität.</mark>
+Caeiro als „das Leben" ist der Meister, Campos und Reis sind seine Schüler. Gefühl und Verstand sind damit Teil des Lebens und ihm untergeordnet, und sie streiten miteinander; Campos steht dabei für die Handlung, Reis für den Rückzug. <mark>Über dem „Leben" wiederum steht Pessoa als „die Kunst", denn Caeiro ist eine von Pessoa erschaffene Figur.</mark> So kehrt erneut dasselbe System wieder: <mark>Die Kunst steht über dem Leben, der Traum über der Realität.</mark>
 
-Wer diese Kunst verkörpert, hängt von der Ebene ab. Caeiro ist eine von Pessoa erschaffene Figur, und Pessoa steht über allen, auch über der Figur, die seinen eigenen Namen trägt. <mark>Innerhalb des Buchs der Unruhe aber ist Soares ihr Autor:</mark> Als Pessoas Halbheteronym steht er dort mit Pessoa gleich. Er ist der Autor, der in den Träumen anderer lebt, und könnte damit genauso gut der Autor von Caeiro, Reis und Campos sein.
+Soares gehört dabei auf dieselbe Ebene wie Caeiro, Reis und Campos. Auch er ist eine Figur Pessoas, und zusammen mit Caeiro bildet er das Gegensatzpaar der ganzen Anordnung: Caeiro das Leben, Soares die Kunst. Was ihn von den dreien unterscheidet, ist allein, dass er das Verfahren mitbeschreibt, dem er seine Existenz verdankt.
 
 ## Warum Soares nicht in den Tod geht
 
@@ -190,6 +207,14 @@ Der Ausgangspunkt ist die Schopenhauer'sche Tretmühle: Der Wille ist Mangel, un
 > *(Fragment 180)*
 
 Soares nimmt den anderen Ausgang. Er schaltet den Willen nicht ab, er richtet ihn auf ein _unmögliches_ Objekt. Ein Ziel, das man nie erreicht, kann man ewig wollen, und Erreichen wäre bei ihm ohnehin Reduktion. Das ist dasselbe Prinzip wie zuvor beim Traum über der Realität, nur auf den Willen selbst gewendet: Wie die vorgestellte Reise das wirkliche Erleben schlägt, so schlägt das unerreichte Ziel jedes erreichte. Die Kalvarienberg-Stelle sagt es wörtlich: Ankommen hieße, „in gewisser Weise weniger sein" (Fragment 180). Er wählt also das eine Ziel, dessen Nicht-Erreichbarkeit es unendlich hält.
+
+Fragment 427 formuliert dieses Prinzip als Lebensregel. Soares entsagt dem Leben zwar, aber nicht, um wie Schopenhauers Asket zur Ruhe zu kommen, sondern ausdrücklich, „um sich nicht selbst zu entsagen" (Fragment 427):
+
+> Daher berühre nichts, was du bewahren willst. Berührst du deinen Traum, stirbt er; das berührte Objekt hält deine Empfindungsfähigkeit gefangen.
+>
+> *(Fragment 427)*
+
+<mark>Der Traum bleibt nur am Leben, solange er unberührt bleibt, und das Ziel nur unendlich, solange es unerreicht bleibt.</mark>
 
 > Wir sollten stets das Unmögliche suchen, denn dies ist unser Geschick; wir sollten es mit Hilfe des Unnützen suchen, denn kein Weg führt daran vorbei; wir sollten uns zu dem Bewußtsein aufschwingen, daß wir nichts suchen, was wir finden könnten, und daß nichts auf unserem Weg eine Zärtlichkeit oder wehmütige Erinnerung verdient.
 >
@@ -247,7 +272,29 @@ Sein voller Name lautet Fernando António Nogueira Pessoa. „Pessoa" heißt auf
 
 ### Der Autorwechsel des Manuskripts
 
-Das Buch, dessen Thema lautet: „Ständig fühle ich, daß ich ein anderer war" (Fragment 213), wechselt im Lauf seiner Entstehung tatsächlich den Autor, von Vicente Guedes zu Bernardo Soares. <mark>Der Satz ist dem Manuskript selbst passiert.</mark>
+Das Buch, dessen Thema lautet: „Ständig fühle ich, daß ich ein anderer war" (Fragment 213), wechselt im Lauf seiner Entstehung tatsächlich den Autor, von Vicente Guedes zu Bernardo Soares. <mark>Der Satz ist dem Manuskript selbst passiert.</mark> Die Instabilität des Ichs ist nicht nur Thema des Buches, sondern Teil seiner materiellen Entstehungsgeschichte.
+
+### Soares X Guedes
+
+Fragment 386 lässt sich als Bild genau dieses Übergangs lesen. Zwei Wanderer gehen im Herbst durch einen Wald, „getrennt-vereint" (Fragment 386), im Gleichschritt und doch jeder für sich. Namen fallen keine, und der Text lässt sich ebenso gut als allgemeines Bild der Ich-Spaltung verstehen. Liest man die beiden aber als Guedes und Soares, ergibt sich ein erstaunlich genaues Porträt ihres Verhältnisses: zwei Gestalten, die denselben Weg gehen, nämlich dasselbe Buch, und sich kaum voneinander unterscheiden lassen.
+
+> Keiner wollte wissen vom anderen, und doch wäre keiner weitergegangen ohne den anderen.
+>
+> *(Fragment 386)*
+
+Das würde auf zwei Verfasser passen, von denen der eine den anderen ablöst, ohne dass das Werk dabei abbricht. Die entscheidende Frage stellt der Text selbst:
+
+> Wer waren wir? Zwei Wesen oder zwei Formen nur eines Wesens? Wir wußten es nicht, noch fragten wir.
+>
+> *(Fragment 386)*
+
+Am Ende weiß das Ich nicht einmal mehr, welcher der beiden es ist:
+
+> eine Illusion, die es nie gab – der Wald, die zwei Wanderer und ich, nicht wissend, wer von beiden ich war, ob beide oder keiner von beiden.
+>
+> *(Fragment 386)*
+
+<mark>So gelesen, wäre Fragment 386 der Autorwechsel aus der Innensicht: ein Ich, das zwei Namen trägt und keinem von beiden sicher gehört.</mark> Ob Pessoa das so gemeint hat, lässt sich nicht belegen. Die Lesart fügt sich aber nahtlos in ein Buch, dessen Thema es ist, sich ständig als ein anderer zu fühlen.
 
 ### Die Parallele zu Amiel
 
