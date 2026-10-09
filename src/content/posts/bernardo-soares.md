@@ -1,7 +1,7 @@
 ---
 title: "Bernardo Soares und das Pessoa-System"
 date: 2026-08-29
-description: "Bernardo Soares - der passivste Mann der ununterbrochen handelt."
+description: "Die Darstellung eines Verfahrens, verfasst von einem seiner Erzeugnisse."
 work: "The Book of Disquiet"
 author: "Fernando Pessoa"
 cover: "/covers/tbod.jpg"
